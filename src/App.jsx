@@ -1,13 +1,14 @@
-import './App.css'
+import Logo from "./components/Logo/Logo";
+import Hero from "./components/Hero/Hero";
+import "./App.css";
 
 function App() {
-
-
   return (
     <>
-      <h1>BookRead</h1>
+      <Logo />
+      <Hero />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
