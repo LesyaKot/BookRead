@@ -21,10 +21,10 @@ export default function Hero() {
                 <p className={css.text}> <GoChevronRight className={css.accent}/>Become an interesting interlocutor</p>
       </div>
 
-      <div className={css.btnWrap}>
+      {/* <div className={css.btnWrap}>
         <button className={css.loginBtn}>Log in</button>
         <button className={css.registerBtn}>Register</button>
-      </div>
+      </div> */}
     </>
   );
 }
