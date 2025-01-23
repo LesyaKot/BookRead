@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { register } from "../../redux/auth/operations";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup"; // Для валідації
+import * as Yup from "yup";
 import css from "./RegisterForm.module.css";
 
 export default function RegisterForm() {
@@ -12,7 +12,7 @@ export default function RegisterForm() {
     actions.resetForm();
   };
 
-  // Схема валідації з Yup
+  
   const validationSchema = Yup.object({
     name: Yup.string()
       .min(2, "Ім'я повинно містити щонайменше 2 символи")
@@ -36,12 +36,12 @@ export default function RegisterForm() {
         password: "",
         confirmPassword: "",
       }}
-      validationSchema={validationSchema} // Додаємо валідацію
+      validationSchema={validationSchema} 
       onSubmit={handleSubmit}
     >
       <Form className={css.form} autoComplete="off">
         <label className={css.label}>
-          Username
+          Name
           <Field className={css.input} type="text" name="name" />
           <ErrorMessage
             name="name"

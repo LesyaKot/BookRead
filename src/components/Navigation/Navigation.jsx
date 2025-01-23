@@ -15,6 +15,16 @@ export default function Navigation() {
           Library
         </NavLink>
       )}
+      {isLoggedIn && (
+        <NavLink className={css.link} to="/training">
+          Training
+        </NavLink>
+      )}
+      {isLoggedIn && (
+        <NavLink className={css.link} to="/statistics">
+          Statistics
+        </NavLink>
+      )}
     </nav>
   );
 }

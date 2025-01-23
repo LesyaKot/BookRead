@@ -4,7 +4,10 @@ export default function Logo(){
 
     return(
         <>
-        <p className={css.logo}>BR</p>
+        <div className={css.logoContainer}>
+        <p className={css.logo}>BR</p>  
+        </div>
+       
         </>
     )
 }
