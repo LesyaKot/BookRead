@@ -1,3 +1,23 @@
-.form{
-    background-image: ;
+.wrap {
+  background: #091e3fcc;
+  background-image: linear-gradient(#091e3fcc, #091e3fcc), url(/public/pic.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 320px;
+  height: 458px;
+}
+.form {
+  width: 280px;
+  height: 334px;
+  display: flex;
+  flex-direction: column;
+}
+.label{
+    font-family: Montserrat;
+font-size: 14px;
+font-weight: 600;
+line-height: 17.07px;
+text-align: left;
+
+
 }

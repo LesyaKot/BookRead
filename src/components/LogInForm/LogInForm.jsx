@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { logIn } from "../../redux/auth/operations";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { BsAsterisk } from "react-icons/bs";
 import css from "./LogInForm.module.css";
 
 export default function LogInForm() {
@@ -22,6 +23,7 @@ export default function LogInForm() {
   });
 
   return (
+    <div  className={css.wrap}>
     <Formik
       initialValues={{
         email: "",
@@ -32,7 +34,7 @@ export default function LogInForm() {
     >
       <Form className={css.form} autoComplete="off">
         <label className={css.label}>
-          Email
+          Email<BsAsterisk />
           <Field className={css.input} type="email" name="email" />
           <ErrorMessage
             name="email"
@@ -41,7 +43,7 @@ export default function LogInForm() {
           />
         </label>
         <label className={css.label}>
-          Password
+          Password<BsAsterisk />
           <Field className={css.input} type="password" name="password" />
           <ErrorMessage
             name="password"
@@ -54,5 +56,7 @@ export default function LogInForm() {
         </button>
       </Form>
     </Formik>
+    </div>
   );
+
 }
