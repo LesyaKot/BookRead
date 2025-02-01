@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import css from "./RegisterForm.module.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import GoogleLoginBtn from "../GoogleLoginBtn/GoogleLoginBtn";
 
 export default function RegisterForm() {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ export default function RegisterForm() {
 
   return (
     <>
+    <GoogleLoginBtn />
       <Formik
         initialValues={{
           name: "",

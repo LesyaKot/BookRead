@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-axios.defaults.baseURL = "https://bookread-backend.goit.global/";
+axios.defaults.baseURL = "https://bookread-backend.goit.global";
 
 const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -13,6 +13,47 @@ const clearAuthHeader = () => {
 
 // dana1111@gmail.com
 
+// // GOOGLE
+// export const googleLogin = createAsyncThunk(
+//   "auth/googleLogin",
+//   async (credential, thunkAPI) => {
+//     try {
+      
+//       const response = await fetch(`/auth/google?token=${encodeURIComponent(credential)}`, {
+//         method: "GET", 
+//         headers: { "Content-Type": "application/json" },
+//       });
+
+//       const data = await response.json();
+//       console.log(data);
+
+//       if (!response.ok) {
+//         throw new Error(data.message || "Authentication failed");
+//       }
+
+//       return data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.message);
+//     }
+//   }
+// );
+
+export const googleLogin = createAsyncThunk(
+  "auth/googleLogin",
+  async ({ accessToken, refreshToken, sid }, thunkAPI) => {
+    try {
+     
+      return { accessToken, refreshToken, sid };
+    } catch (error) {
+      console.error("Google Login Error:", error);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+
+
+// REGISTER
 export const register = createAsyncThunk(
   "auth/register",
   async (newUser, thunkAPI) => {

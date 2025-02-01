@@ -1,4 +1,3 @@
-
 import "./App.css";
 
 import { useEffect, lazy } from "react";
@@ -9,6 +8,7 @@ import PrivateRoute from "./PrivateRoute";
 import RestrictedRoute from "./RestrictedRoute";
 import { refreshUser } from "../src/redux/auth/operations";
 import { useAuth } from "../src/redux/auth/selectors";
+import GoogleAuthRedirect from "./pages/GoogleAuthRedirect";
 
 const HomePage = lazy(() => import("../src/pages/Home"));
 const RegisterPage = lazy(() => import("../src/pages/Register"));
@@ -28,10 +28,11 @@ export default function App() {
   return isRefreshing ? (
     <b>Refreshing user please wait...</b>
   ) : (
-    
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
+        <Route path="/google" element={<GoogleAuthRedirect />} />
+        
         <Route
           path="/register"
           element={
@@ -58,6 +59,5 @@ export default function App() {
         <Route path="*" element={<HomePage />} />
       </Route>
     </Routes>
-   
   );
 }
