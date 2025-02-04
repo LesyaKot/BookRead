@@ -18,9 +18,9 @@ const clearAuthHeader = () => {
 //   "auth/googleLogin",
 //   async (credential, thunkAPI) => {
 //     try {
-      
+
 //       const response = await fetch(`/auth/google?token=${encodeURIComponent(credential)}`, {
-//         method: "GET", 
+//         method: "GET",
 //         headers: { "Content-Type": "application/json" },
 //       });
 
@@ -42,7 +42,6 @@ export const googleLogin = createAsyncThunk(
   "auth/googleLogin",
   async ({ accessToken, refreshToken, sid }, thunkAPI) => {
     try {
-     
       return { accessToken, refreshToken, sid };
     } catch (error) {
       console.error("Google Login Error:", error);
@@ -50,8 +49,6 @@ export const googleLogin = createAsyncThunk(
     }
   }
 );
-
-
 
 // REGISTER
 export const register = createAsyncThunk(
@@ -65,9 +62,6 @@ export const register = createAsyncThunk(
       });
 
       setAuthHeader(response.data.token);
-
-      console.log(response.data);
-
       return response.data;
     } catch (error) {
       console.error("error:", error.response?.data || error.message);
@@ -82,6 +76,7 @@ export const logIn = createAsyncThunk(
     try {
       const response = await axios.post("/auth/login", userInfo);
       setAuthHeader(response.data.token);
+
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -98,19 +93,43 @@ export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   }
 });
 
+// export const refreshUser = createAsyncThunk(
+//   "auth/refresh",
+//   async (_, thunkAPI) => {
+//     const reduxState = thunkAPI.getState();
+//     setAuthHeader(reduxState.auth.token);
+
+//     const response = await axios.get("auth/current");
+//     return response.data;
+//   },
+//   {
+//     condition(_, thunkAPI) {
+//       const reduxState = thunkAPI.getState();
+//       return reduxState.auth.token !== null;
+//     },
+//   }
+// );
 export const refreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
     const reduxState = thunkAPI.getState();
+    if (!reduxState.auth.token) {
+      return thunkAPI.rejectWithValue("No token found");
+    }
     setAuthHeader(reduxState.auth.token);
 
-    const response = await axios.get("auth/current");
-    return response.data;
+    try {
+      const response = await axios.get("/auth/current");
+      return response.data;
+    } catch (error) {
+      clearAuthHeader();
+      return thunkAPI.rejectWithValue(error.response?.data || error.message);
+    }
   },
   {
     condition(_, thunkAPI) {
       const reduxState = thunkAPI.getState();
-      return reduxState.auth.token !== null;
+      return !!reduxState.auth.token && reduxState.auth.isLoggedIn;
     },
   }
 );
