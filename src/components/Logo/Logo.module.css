@@ -8,18 +8,3 @@
   line-height: 38px;
 }
 
-.logo-container {
-  width: 100%;
-  text-align: center;
-  position: relative;
-  padding: 16px 146зч;
-  background-color: #f8f9fa;
-}
-.logoContainer::after {
-  content: "";
-  display: block;
-  height: 1px;
-  background-color: #091e3f1a;
-  margin: 10px auto 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}

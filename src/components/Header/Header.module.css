@@ -1,0 +1,86 @@
+.nav {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+.iconBook {
+  color: #a6abb9;
+  width: 22px;
+  height: 17px;
+}
+.iconBookWrap {
+  width: 33px;
+  height: 33px;
+  background-color: transparent;
+  padding: 7px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.iconHomeWrap {
+  width: 33px;
+  height: 33px;
+  background-color: #f5f7fa;
+  padding: 7px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.iconHome {
+  color: #a6abb9;
+  width: 22px;
+  height: 17px;
+  align-items: center;
+}
+
+.wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 22px;
+  text-align: center;
+  width: 100%;
+
+  border-bottom: 1px solid #e0e5eb;
+
+  margin-bottom: 10px;
+  width: 320px;
+  height: 60px;
+}
+
+.logoutBtn {
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 17.07px;
+  text-align: left;
+  border: none;
+  background-color: transparent;
+  text-decoration: none;
+}
+.nameWrap {
+  display: flex;
+  flex-direction: row;
+}
+.userName {
+  display: flex;
+  flex-direction: row;
+  margin-left: 12px;
+  /* visibility: hidden; */
+  display: none;
+}
+
+.firstLetterWrap {
+  width: 33px;
+  height: 33px;
+  color: #242a37;
+  background-color: #f5f7fa;
+  padding: 7px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
