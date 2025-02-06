@@ -2,7 +2,7 @@ import { MdMenuBook } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 import Logo from "../Logo/Logo";
-
+import PropTypes from "prop-types";
 import css from "./Header.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { logOut } from "../../redux/auth/operations";
@@ -10,7 +10,7 @@ import { selectUser } from "../../redux/auth/selectors";
 
 const getFirstName = (fullName) => (fullName ? fullName.split(" ")[0] : "User");
 
-export default function Header() {
+export default function Header({ onIconClick }) {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
@@ -25,8 +25,9 @@ export default function Header() {
         <nav className={css.nav}>
           <NavLink className={css.link} to="/library">
             <div className={css.iconBookWrap}>
-              <MdMenuBook className={css.iconHome} width={22} height={17} />
+              <MdMenuBook className={css.iconHome} onClick={onIconClick} width={22} height={17} />
             </div>
+            
           </NavLink>
 
           <NavLink className={css.link} to="/">
@@ -58,3 +59,7 @@ export default function Header() {
     </>
   );
 }
+
+Header.propTypes = {
+  onIconClick: PropTypes.func.isRequired,
+};
