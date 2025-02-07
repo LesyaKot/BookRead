@@ -1,5 +1,4 @@
 import "./App.css";
-
 import { useEffect, lazy } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
@@ -8,6 +7,7 @@ import PrivateRoute from "./PrivateRoute";
 import RestrictedRoute from "./RestrictedRoute";
 import { refreshUser } from "../src/redux/auth/operations";
 import { useAuth } from "../src/redux/auth/selectors";
+
 import GoogleAuthRedirect from "./pages/GoogleAuthRedirect";
 
 const HomePage = lazy(() => import("../src/pages/Home"));
@@ -37,7 +37,7 @@ export default function App() {
           path="/register"
           element={
             <RestrictedRoute
-              redirectTo="/library"
+              redirectTo="/books"
               component={<RegisterPage />}
             />
           }
@@ -45,11 +45,11 @@ export default function App() {
         <Route
           path="/login"
           element={
-            <RestrictedRoute redirectTo="/library" component={<LoginPage />} />
+            <RestrictedRoute redirectTo="/books" component={<LoginPage />} />
           }
         />
         <Route
-          path="/library"
+          path="/books"
           element={
             <>
               <PrivateRoute redirectTo="/login" component={<LibraryPage />} />

@@ -1,11 +1,10 @@
 :root {
-  font-family: Montserrat, system-ui, 
-  Abril Fatface,  sans-serif;
+  font-family: Montserrat, system-ui, Abril Fatface, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  background-color: #F6F7FB;
-  color: #242A37;
+  background-color: #f6f7fb;
+  color: #242a37;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -13,7 +12,7 @@
 }
 
 a {
-  font-weight: 500;  
+  font-weight: 500;
   text-decoration: inherit;
 }
 
@@ -37,7 +36,6 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
 }
