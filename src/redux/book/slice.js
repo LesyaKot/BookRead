@@ -15,8 +15,9 @@ const booksSlice = createSlice({
       })
       .addCase(addBook.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.items = action.payload;
+        state.items.push(action.payload); 
       })
+      
       .addCase(addBook.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
@@ -26,8 +27,8 @@ const booksSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchBooks.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.items = action.payload; 
+        console.log("Fetched books:", action.payload);
+        state.items = action.payload.goingToRead || []; 
       })
       .addCase(fetchBooks.rejected, (state, action) => {
         state.isLoading = false;
