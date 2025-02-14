@@ -83,13 +83,29 @@ export const logIn = createAsyncThunk(
     }
   }
 );
-
+// log out
 export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
-    await axios.post("/auth/logout");
-    clearAuthHeader();
+    const state = thunkAPI.getState();
+    const token = state.auth.token;
+
+    if (!token) {
+      return thunkAPI.rejectWithValue("No token provided");
+    }
+
+    await axios.post(
+      "https://bookread-backend.goit.global/auth/logout",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return true;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+    return thunkAPI.rejectWithValue(error.response?.data || error.message);
   }
 });
 
