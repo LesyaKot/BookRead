@@ -7,10 +7,6 @@ const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
-const clearAuthHeader = () => {
-  axios.defaults.headers.common.Authorization = "";
-};
-
 // dana1111@gmail.com
 
 // // GOOGLE
@@ -70,6 +66,7 @@ export const register = createAsyncThunk(
   }
 );
 
+// log in
 export const logIn = createAsyncThunk(
   "auth/login",
   async (userInfo, thunkAPI) => {
@@ -109,43 +106,27 @@ export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   }
 });
 
-// export const refreshUser = createAsyncThunk(
-//   "auth/refresh",
-//   async (_, thunkAPI) => {
-//     const reduxState = thunkAPI.getState();
-//     setAuthHeader(reduxState.auth.token);
-
-//     const response = await axios.get("auth/current");
-//     return response.data;
-//   },
-//   {
-//     condition(_, thunkAPI) {
-//       const reduxState = thunkAPI.getState();
-//       return reduxState.auth.token !== null;
-//     },
-//   }
-// );
+// refresh token
 export const refreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
-    const reduxState = thunkAPI.getState();
-    if (!reduxState.auth.token) {
-      return thunkAPI.rejectWithValue("No token found");
+    const state = thunkAPI.getState();
+    const sid = state.auth.sid;
+
+    if (!sid) {
+      return thunkAPI.rejectWithValue("No session ID (sid) found");
     }
-    setAuthHeader(reduxState.auth.token);
 
     try {
-      const response = await axios.get("/auth/current");
+      const response = await axios.post(
+        "/auth/refresh",
+        { sid }, 
+        { withCredentials: true }
+      );
       return response.data;
     } catch (error) {
-      clearAuthHeader();
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
     }
-  },
-  {
-    condition(_, thunkAPI) {
-      const reduxState = thunkAPI.getState();
-      return !!reduxState.auth.token && reduxState.auth.isLoggedIn;
-    },
   }
 );
+
