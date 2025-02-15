@@ -3,6 +3,12 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addBook } from "../../redux/book/operations";
+import { MdMenuBook } from "react-icons/md";
+import { CiFlag1 } from "react-icons/ci";
+import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
+import { FaLongArrowAltLeft } from "react-icons/fa";
+
+
 
 export default function Modal({ isOpen, onClose }) {
   const dispatch = useDispatch();
@@ -72,8 +78,8 @@ export default function Modal({ isOpen, onClose }) {
   return (
     <div className={css.backdrop} onClick={handleClose}>
       <div className={css.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={css.close} onClick={onClose}>
-          &times;
+        <button className={css.close} onClick={onClose}><FaLongArrowAltLeft />
+          {/* &times; */}
         </button>
 
         <form className={css.form} onSubmit={handleSubmit}>
@@ -135,13 +141,20 @@ export default function Modal({ isOpen, onClose }) {
         </form>
       </div>
 
-      <div>
-        <h2>Step 1.</h2>
-        <h3>Create your own library</h3>
-        <p>Add there books which you are going to read.</p>
-        <h2>Step 2.</h2>
-        <h3>Create your first training</h3>
-        <p>Set a goal, choose period, start training.</p>
+      <div className={css.textWrap}>
+        <h2 className={css.textTitle}>Step 1.</h2>
+        <h3 className={css.textTitleMin}>
+          <MdMenuBook className={css.iconHome} width={22} height={17} />
+          Create your own library
+        </h3>
+        <p className={css.text}><MdOutlineSubdirectoryArrowRight className={css.iconArrow}/>Add there books which you are going to read.</p>
+        <h2 className={css.textTitle}>Step 2.</h2>
+        <h3 className={css.textTitleMin}>
+          <CiFlag1 width={22} height={17} />
+          Create your first training
+        </h3>
+        <p className={css.text}><MdOutlineSubdirectoryArrowRight className={css.iconArrow}/>Set a goal, choose period, start training.</p>
+      {/* <button className={css.okBtn}>ok</button> */}
       </div>
     </div>
   );
