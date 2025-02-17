@@ -1,0 +1,15 @@
+.googleBtn {
+  width: 150;
+  height: 40;
+  top: 92px;
+  left: 85px;
+}
+
+.googleWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 32px;
+  padding-bottom: 28px;
+  
+}
