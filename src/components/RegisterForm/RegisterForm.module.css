@@ -1,0 +1,100 @@
+.wrap {
+  background: #091e3fcc;
+  background-image: linear-gradient(#091e3fcc, #091e3fcc), url(/public/pic.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 320px;
+  height: 648px;
+}
+.logoWrap {
+  background-color: #ffffff;
+  padding: 16px 146px;
+  margin: 0;
+}
+.loginWrape {
+  width: 100%;
+  align-items: center;
+}
+.form {
+  width: 280px;
+  height: 512px;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 20px;
+}
+.label {
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17.07px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  color: #fff;
+}
+.icon {
+  color: #ff6b08;
+}
+.labelText {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.input {
+  display: block;
+  padding-left: 8px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  background-color: #f5f7fa;
+  margin-bottom: 20px;
+  color: #a6abb9;
+}
+.btn {
+  background-color: #ff6b08;
+  color: #fff;
+  width: 280px;
+  height: 60px;
+  border-radius: 0%;
+}
+.textTitle {
+  display: inline-block;
+  margin: 0;
+  color: #242a37;
+}
+
+.text {
+  position: relative;
+  text-align: center;
+  color: #898f9f;
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17.07px;
+}
+
+.text::before {
+  content: "";
+  display: block;
+  width: 100px;
+  height: 2px;
+  margin: 0 auto 12px;
+  background-color: #898f9f;
+}
+
+.accent {
+  color: #ff6b08;
+}
+.linkWrap {
+  margin-top: 20px;
+}
+.link {
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 15.85px;
+  letter-spacing: 0%;
+  text-align: center;
+  color: #a6abb9;
+}

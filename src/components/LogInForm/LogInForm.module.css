@@ -45,8 +45,6 @@
 
 .input {
   display: block;
-  width: 280px;
-  height: 42px;
   padding-left: 8px;
   padding-top: 13px;
   padding-bottom: 13px;
@@ -84,4 +82,20 @@
   height: 2px;
   margin: 0 auto 12px;
   background-color: #898f9f;
+}
+
+.accent {
+  color: #ff6b08;
+}
+.linkWrap {
+  margin-top: 20px;
+}
+.link {
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 15.85px;
+  letter-spacing: 0%;
+  text-align: center;
+  color: #a6abb9;
 }

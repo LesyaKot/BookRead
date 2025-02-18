@@ -7,6 +7,7 @@ import GoogleLoginBtn from "../GoogleLoginBtn/GoogleLoginBtn";
 import css from "./LogInForm.module.css";
 import { FaQuoteLeft } from "react-icons/fa";
 import Logo from "../Logo/Logo";
+import { Link } from "react-router-dom";
 
 export default function LogInForm() {
   const dispatch = useDispatch();
@@ -79,6 +80,12 @@ export default function LogInForm() {
             <button className={css.btn} type="submit">
               Log in
             </button>
+
+            <div className={css.linkWrap}>
+              <Link className={css.link} to="/register">
+                <span className={css.accent}>Register</span>
+              </Link>
+            </div>
           </Form>
         </Formik>
 
