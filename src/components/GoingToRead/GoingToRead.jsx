@@ -1,8 +1,9 @@
-import { fetchBooks } from "../../redux/book/operations.js";
+import { fetchBooks, deleteBook } from "../../redux/book/operations.js";
 import { useEffect } from "react";
 import { selectBooks, selectBooksLoading } from "../../redux/book/selectors.js";
 import { useSelector, useDispatch } from "react-redux";
 import css from "./GoingToRead.module.css";
+import { toast } from "react-hot-toast";
 
 export default function GoingToRead() {
   const dispatch = useDispatch();
@@ -13,9 +14,12 @@ export default function GoingToRead() {
     dispatch(fetchBooks());
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log("Books in state:", books);
-  }, [books]);
+  const handleDelete = (id) => {
+    dispatch(deleteBook(id))
+      .unwrap()
+      .then(() => toast.success("Book deleted!"))
+      .catch(() => toast.error("Failed to delete book"));
+  };
 
   return (
     <div className={css.wrap}>
@@ -23,7 +27,16 @@ export default function GoingToRead() {
       {books.length > 0 ? (
         <ul>
           {books.map((book) => (
-            <div key={book._id}>{book.title}</div>
+            <li key={book._id} className={css.bookItem}>
+              <span>{book.title}</span>
+              <button
+                className={css.btn}
+                type="button"
+                onClick={() => handleDelete(book._id)}
+              >
+                Delete
+              </button>
+            </li>
           ))}
         </ul>
       ) : (

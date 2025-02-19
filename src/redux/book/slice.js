@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addBook, fetchBooks } from "./operations";
+import { addBook, fetchBooks, deleteBook } from "./operations";
 
 const booksSlice = createSlice({
   name: "books",
@@ -15,25 +15,37 @@ const booksSlice = createSlice({
       })
       .addCase(addBook.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.items.push(action.payload); 
+        state.items.push(action.payload);
       })
-      
+
       .addCase(addBook.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
+
+      .addCase(deleteBook.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteBook.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items = state.items.filter(
+          (book) => book._id !== action.payload.id
+        );
+      })
+
       .addCase(fetchBooks.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(fetchBooks.fulfilled, (state, action) => {
         console.log("Fetched books:", action.payload);
-        state.items = action.payload.goingToRead || []; 
+        state.items = action.payload.goingToRead || [];
       })
       .addCase(fetchBooks.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      })
+      });
   },
 });
 

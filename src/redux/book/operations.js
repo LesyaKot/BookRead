@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+
 // add book
 export const addBook = createAsyncThunk(
   "books/add",
@@ -28,6 +29,28 @@ export const addBook = createAsyncThunk(
     }
   }
 );
+
+
+// delete book
+export const deleteBook = createAsyncThunk(
+  "books/deleteBook",
+  async (bookId, thunkAPI) => {
+    try {
+      const state = thunkAPI.getState();
+      const token = state.auth.token;
+      if (!token) throw new Error("No auth token");
+
+      await axios.delete(`/book/${bookId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      return { id: bookId };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 
 //   get all books
 export const fetchBooks = createAsyncThunk(
