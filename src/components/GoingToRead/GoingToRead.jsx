@@ -4,6 +4,7 @@ import { selectBooks, selectBooksLoading } from "../../redux/book/selectors.js";
 import { useSelector, useDispatch } from "react-redux";
 import css from "./GoingToRead.module.css";
 import { toast } from "react-hot-toast";
+import { MdMenuBook } from "react-icons/md";
 
 export default function GoingToRead() {
   const dispatch = useDispatch();
@@ -23,12 +24,18 @@ export default function GoingToRead() {
 
   return (
     <div className={css.wrap}>
-      <h2>Going to read</h2>
+      <h2 className={css.title}>Going to read</h2>
       {books.length > 0 ? (
-        <ul>
+        <ul className={css.list}>
           {books.map((book) => (
-            <li key={book._id} className={css.bookItem}>
-              <span>{book.title}</span>
+            
+            <li key={book._id} className={css.listItem}>
+              <MdMenuBook className={css.icon}/>
+              <div className={css.textWrap}>
+              <p className={css.text}>{book.title}</p>
+              <p className={css.text}><span className={css.accent}>Author: </span> {book.author}</p>
+              <p className={css.text}><span className={css.accent}>Year: </span> {book.publishYear}</p>
+              <p className={css.text}><span className={css.accent}>Pages: </span> {book.pagesTotal}</p>
               <button
                 className={css.btn}
                 type="button"
@@ -36,6 +43,7 @@ export default function GoingToRead() {
               >
                 Delete
               </button>
+              </div>
             </li>
           ))}
         </ul>
@@ -43,5 +51,6 @@ export default function GoingToRead() {
         !isLoading && <p>No books found.</p>
       )}
     </div>
+    
   );
 }
