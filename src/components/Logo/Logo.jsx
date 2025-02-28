@@ -6,8 +6,7 @@ export default function Logo(){
         <>
         <div className={css.logoContainer}>
         <p className={css.logo}>BR</p>  
-        </div>
-       
+        </div>       
         </>
     )
 }

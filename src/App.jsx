@@ -31,7 +31,6 @@ export default function App() {
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} />
-
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
@@ -58,6 +57,7 @@ export default function App() {
               <PrivateRoute redirectTo="/login" component={<LibraryPage />} />
             }
           />
+
           <Route path="*" element={<HomePage />} />
         </Route>
       </Routes>

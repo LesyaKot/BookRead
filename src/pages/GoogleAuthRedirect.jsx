@@ -1,31 +1,3 @@
-// import { useEffect } from "react";
-// import { useSearchParams, useNavigate } from "react-router-dom";
-// import { useDispatch } from "react-redux";
-// import { googleLogin } from "../redux/auth/operations";
-
-// export default function GoogleAuthRedirect() {
-//   const [searchParams] = useSearchParams();
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     const accessToken = searchParams.get("accessToken");
-//     const refreshToken = searchParams.get("refreshToken");
-//     const sid = searchParams.get("sid");
-
-//     console.log("Google Redirect Data:", { accessToken, refreshToken, sid });
-
-//     if (accessToken && refreshToken && sid) {
-//       dispatch(googleLogin({ accessToken, refreshToken, sid }));
-//       navigate("/user/books");
-//     } else {
-//       navigate("/login");
-//     }
-//   }, [dispatch, navigate, searchParams]);
-
-//   return <p>Авторизація...</p>;
-// }
-
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";

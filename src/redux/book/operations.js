@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
 // add book
 export const addBook = createAsyncThunk(
   "books/add",
@@ -30,7 +29,6 @@ export const addBook = createAsyncThunk(
   }
 );
 
-
 // delete book
 export const deleteBook = createAsyncThunk(
   "books/deleteBook",
@@ -51,7 +49,6 @@ export const deleteBook = createAsyncThunk(
   }
 );
 
-
 //   get all books
 export const fetchBooks = createAsyncThunk(
   "books/fetchAll",
@@ -68,6 +65,35 @@ export const fetchBooks = createAsyncThunk(
         }
       );
 
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+
+// planning currenlyReadBooks
+export const currentlyRead = createAsyncThunk(
+  "books/currentlyRead",
+  async (planningData, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.auth.token;
+    if (!token) {
+      return thunkAPI.rejectWithValue("No token found");
+    }
+
+    try {
+      const response = await axios.post(
+        "https://bookread-backend.goit.global/planning",
+        planningData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            withCredentials: true,
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
