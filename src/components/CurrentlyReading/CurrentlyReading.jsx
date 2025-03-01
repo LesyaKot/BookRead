@@ -12,7 +12,7 @@ export default function CurrentlyReading() {
 
   return (
     <div>
-      <h2>Currently Reading</h2>
+      <h2>Reading now</h2>
       <ul className={css.list}>
         {currentlyReadingBooks.map((book) => (
           <li key={book._id} className={css.listItem}>

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addBook, fetchBooks, deleteBook, currentlyRead } from "./operations";
+import { addBook, fetchBooks, deleteBook, currentlyRead, resume} from "./operations";
 
 const initialState = {
   items: [],
@@ -90,6 +90,24 @@ const booksSlice = createSlice({
         }
       })
       .addCase(currentlyRead.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(resume.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(resume.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+
+        const bookId = action.meta.arg.books[0];
+        const index = state.items.findIndex((book) => book._id === bookId);
+        if (index !== -1) {
+          state.items[index].status = "finishedReading";
+        }
+      })
+      .addCase(resume.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

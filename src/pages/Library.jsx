@@ -5,7 +5,7 @@ import { closeModal, openModal } from "../redux/modal/slice.js";
 import { selectModal } from "../redux/modal/selectors.js";
 import Modal from "../components/Modal/Modal.jsx";
 import GoingToRead from "../components/GoingToRead/GoingToRead.jsx";
-// import AlreadyRead from "../components/AlreadyRead/AlreadyRead.jsx";
+import AlreadyRead from "../components/AlreadyRead/AlreadyRead.jsx";
 import CurrentlyReading from "../components/CurrentlyReading/CurrentlyReading.jsx";
 
 
@@ -33,7 +33,7 @@ export default function Library() {
       <Modal isOpen={isOpen} onClose={handleCloseModal} />
       <GoingToRead />
       <CurrentlyReading />
-      {/* <AlreadyRead /> */}
+      <AlreadyRead />
     </>
   );
 }

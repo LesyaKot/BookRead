@@ -100,3 +100,32 @@ export const currentlyRead = createAsyncThunk(
     }
   }
 );
+
+// resume already read books
+export const resume = createAsyncThunk(
+  "books/resume",
+  async ({ bookId, pages, review, rating }, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.auth.token;
+    if (!token) {
+      return thunkAPI.rejectWithValue("No token found");
+    }
+
+    try {
+      const response = await axios.patch(
+        "https://bookread-backend.goit.global/planning",
+        { pages },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            withCredentials: true,
+          },
+        }
+      );
+console.log(response)
+      return { bookId, review, rating };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
