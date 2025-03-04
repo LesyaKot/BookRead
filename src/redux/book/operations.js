@@ -101,12 +101,41 @@ export const currentlyRead = createAsyncThunk(
   }
 );
 
-// resume already read books
-export const resume = createAsyncThunk(
-  "books/resume",
-  async ({ bookId, pages, review, rating }, thunkAPI) => {
+// resume 
+export const resume = createAsyncThunk("books/resume", async ({ bookId, rating, feedback }, thunkAPI) => {
+  try {
+    const state = thunkAPI.getState();
+    const token = state.auth.token; 
+
+    if (!token) {
+      return thunkAPI.rejectWithValue("No auth token found");
+    }
+
+    const response = await axios.patch(
+      `https://bookread-backend.goit.global/book/review/${bookId}`,
+      { rating, feedback },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response?.data || "Error updating review");
+  }
+});
+
+
+// update amount of pages
+export const updateReadPages = createAsyncThunk(
+  "books/updateReadPages",
+  async ({ pagesRead }, thunkAPI) => {
     const state = thunkAPI.getState();
     const token = state.auth.token;
+
     if (!token) {
       return thunkAPI.rejectWithValue("No token found");
     }
@@ -114,18 +143,20 @@ export const resume = createAsyncThunk(
     try {
       const response = await axios.patch(
         "https://bookread-backend.goit.global/planning",
-        { pages },
+        { pages: pagesRead },
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            withCredentials: true,
+            "Content-Type": "application/json",
           },
         }
       );
-console.log(response)
-      return { bookId, review, rating };
+
+      return response.data; 
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
     }
   }
 );
+
+

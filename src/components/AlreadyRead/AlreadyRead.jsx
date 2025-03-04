@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { selectBooks } from "../../redux/book/selectors";
+import { fetchBooks } from "../../redux/book/operations";
 import Resume from "../Resume/Resume.jsx";
+import Rating from "../Rating/Rating.jsx";
 import css from "./AlreadyRead.module.css";
 
 export default function AlreadyRead() {
@@ -13,10 +15,10 @@ export default function AlreadyRead() {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
   const [selectedBookId, setSelectedBookId] = useState(null);
 
-  const handleBookMoved = () => {
-    setIsResumeOpen(false);
-    setSelectedBookId(null);
-  };
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchBooks());
+  }, [dispatch, books.length]);
 
   return (
     <div>
@@ -35,6 +37,29 @@ export default function AlreadyRead() {
               <p className={css.text}>
                 <span className={css.accent}>Pages: </span> {book.pagesTotal}
               </p>
+              {book.rating && (
+                <div className={css.feedback}>
+                  <span className={css.accent}>Rating:</span>
+                  <Rating rating={book.rating} />
+                </div>
+              )}
+              {book.feedback && (
+                <p className={css.feedback}>
+                  <span className={css.accent}>Review: </span> {book.feedback}
+                </p>
+              )}
+            </div>
+            <div>
+              <ul>
+                {Array.isArray(book.feedback) &&
+                  book.feedback.map((review, index) => (
+                    <li key={index}>
+                      <Rating />
+                      <p>⭐ {book.rating[index]} stars</p>
+                      <p>{review}</p>
+                    </li>
+                  ))}
+              </ul>
             </div>
             <button
               onClick={() => {
@@ -47,7 +72,6 @@ export default function AlreadyRead() {
           </li>
         ))}
       </ul>
-
       {isResumeOpen && selectedBookId !== null && (
         <Resume
           isOpen={isResumeOpen}
@@ -56,7 +80,6 @@ export default function AlreadyRead() {
             setSelectedBookId(null);
           }}
           bookId={selectedBookId}
-          onBookMoved={handleBookMoved}
         />
       )}
     </div>

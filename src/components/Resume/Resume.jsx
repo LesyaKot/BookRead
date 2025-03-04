@@ -1,35 +1,33 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { resume } from "../../redux/book/operations";
+import { useState, useEffect, useMemo } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { resume, fetchBooks } from "../../redux/book/operations";
 import { selectBooks } from "../../redux/book/selectors";
-import { toast } from "react-hot-toast";
+
 import Rating from "../Rating/Rating";
 import css from "./Resume.module.css";
 
-export default function Resume({ isOpen, onClose, bookId, onBookMoved }) {
+export default function Resume({ isOpen, onClose, bookId }) {
   const dispatch = useDispatch();
   const books = useSelector(selectBooks);
-  const book = books.find((b) => b._id === bookId);
-  
+
+  const book = useMemo(
+    () => books.find((b) => b._id === bookId),
+    [books, bookId]
+  );
+
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
 
-  const handleSave = () => {
-    const resumeData = {
-      bookId,
-      pages: book.pagesTotal,
-      review,
-      rating,
-    };
+  useEffect(() => {
+    if (book) {
+      setRating(book.rating || 0);
+      setReview(book.feedback || "");
+    }
+  }, [bookId, book]);
 
-    dispatch(resume(resumeData))
-      .unwrap()
-      .then(() => {
-        toast.success("Book moved to Already Read!");
-        onBookMoved(bookId);
-        onClose();
-      })
-      .catch(() => toast.error("Failed to move book"));
+  const handleSave = async () => {
+    await dispatch(resume({ bookId, rating, feedback: review }));
+    dispatch(fetchBooks());
   };
 
   return (
@@ -42,7 +40,7 @@ export default function Resume({ isOpen, onClose, bookId, onBookMoved }) {
           <p>Choose rating of the book</p>
           <Rating rating={rating} setRating={setRating} />
           <textarea
-            placeholder="Write your review..."
+            placeholder="..."
             value={review}
             onChange={(e) => setReview(e.target.value)}
           />

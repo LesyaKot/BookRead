@@ -1,5 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addBook, fetchBooks, deleteBook, currentlyRead, resume} from "./operations";
+import {
+  addBook,
+  fetchBooks,
+  deleteBook,
+  currentlyRead,
+  resume,
+  updateReadPages,
+} from "./operations";
 
 const initialState = {
   items: [],
@@ -13,7 +20,6 @@ const booksSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder
-
       .addCase(addBook.pending, (state) => {
         state.isLoading = true;
       })
@@ -25,7 +31,6 @@ const booksSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-
       .addCase(deleteBook.pending, (state) => {
         state.isLoading = true;
       })
@@ -39,7 +44,6 @@ const booksSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-
       .addCase(fetchBooks.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -75,7 +79,6 @@ const booksSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-
       .addCase(currentlyRead.pending, (state) => {
         state.isLoading = true;
       })
@@ -94,22 +97,47 @@ const booksSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(resume.pending, (state) => {
-        state.isLoading = true;
-      })
+      
       .addCase(resume.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
 
-        const bookId = action.meta.arg.books[0];
-        const index = state.items.findIndex((book) => book._id === bookId);
+        const updatedBook = action.payload;
+        const index = state.items.findIndex(
+          (book) => book._id === updatedBook._id
+        );
+
         if (index !== -1) {
-          state.items[index].status = "finishedReading";
+          state.items[index] = {
+            ...state.items[index],
+            feedback: [
+              ...(Array.isArray(state.items[index].feedback)
+                ? state.items[index].feedback
+                : []),
+              updatedBook.feedback,
+            ],
+            rating: [
+              ...(Array.isArray(state.items[index].rating)
+                ? state.items[index].rating
+                : []),
+              updatedBook.rating,
+            ],
+            status: "finishedReading",
+          };
         }
       })
-      .addCase(resume.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
+
+      .addCase(updateReadPages.fulfilled, (state, action) => {
+        const { bookId, updatedBook } = action.payload;
+
+        const index = state.items.findIndex((book) => book._id === bookId);
+        if (index !== -1) {
+          state.items[index].pagesFinished = updatedBook.pagesFinished;
+
+          if (updatedBook.pagesFinished === updatedBook.totalPages) {
+            state.items[index].status = "finishedReading";
+          }
+        }
       });
   },
 });
