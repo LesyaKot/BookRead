@@ -30,23 +30,28 @@ export default function Resume({ isOpen, onClose, bookId }) {
     dispatch(fetchBooks());
   };
 
-  return (
+    return (
     isOpen && (
       <div
         className={css.overlay}
         onClick={(e) => e.target.classList.contains(css.overlay) && onClose()}
       >
         <div className={css.modal}>
-          <p>Choose rating of the book</p>
+          <p className={css.text}>Choose rating of the book</p>
+          <div className={css.ratingWrap}>
           <Rating rating={rating} setRating={setRating} />
+          <p className={css.text}>Resume</p>
           <textarea
+          className={css.input}
             placeholder="..."
             value={review}
             onChange={(e) => setReview(e.target.value)}
           />
+          </div>
+         
           <div className={css.buttons}>
-            <button onClick={onClose}>Back</button>
-            <button onClick={handleSave}>Save</button>
+            <button className={css.btn} onClick={onClose}>Back</button>
+            <button className={`${css.btn} ${rating > 0 ? css.active : ""}`} onClick={handleSave}>Save</button>
           </div>
         </div>
       </div>

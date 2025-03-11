@@ -4,6 +4,7 @@ import { selectBooks } from "../../redux/book/selectors";
 import { fetchBooks } from "../../redux/book/operations";
 import Resume from "../Resume/Resume.jsx";
 import Rating from "../Rating/Rating.jsx";
+import { MdMenuBook } from "react-icons/md";
 import css from "./AlreadyRead.module.css";
 
 export default function AlreadyRead() {
@@ -21,13 +22,16 @@ export default function AlreadyRead() {
   }, [dispatch, books.length]);
 
   return (
-    <div>
-      <h2>Already read</h2>
+    <div className={css.wrap}>
+      <h2 className={css.title}>Already read</h2>
       <ul className={css.list}>
         {alreadyReadBooks.map((book) => (
           <li key={book._id} className={css.listItem}>
+            <div className={css.titleWrap}>
+              <MdMenuBook className={css.icon} />
+              <p className={css.textTitle}>{book.title}</p>
+            </div>
             <div className={css.textWrap}>
-              <p className={css.text}>{book.title}</p>
               <p className={css.text}>
                 <span className={css.accent}>Author: </span> {book.author}
               </p>
@@ -44,24 +48,25 @@ export default function AlreadyRead() {
                 </div>
               )}
               {book.feedback && (
-                <p className={css.feedback}>
-                  <span className={css.accent}>Review: </span> {book.feedback}
+                <p className={css.review}>
+                  <span className={css.review}>Review: </span> {book.feedback}
                 </p>
               )}
             </div>
-            <div>
-              <ul>
-                {Array.isArray(book.feedback) &&
-                  book.feedback.map((review, index) => (
-                    <li key={index}>
-                      <Rating />
-                      <p>⭐ {book.rating[index]} stars</p>
-                      <p>{review}</p>
-                    </li>
-                  ))}
-              </ul>
-            </div>
+
+            <ul>
+              {Array.isArray(book.feedback) &&
+                book.feedback.map((review, index) => (
+                  <li key={index}>
+                    <Rating />
+                    <p>⭐ {book.rating[index]} stars</p>
+                    <p className={css.review}>{review}</p>
+                  </li>
+                ))}
+            </ul>
+
             <button
+              className={css.btn}
               onClick={() => {
                 setSelectedBookId(book._id);
                 setIsResumeOpen(true);
@@ -72,6 +77,7 @@ export default function AlreadyRead() {
           </li>
         ))}
       </ul>
+
       {isResumeOpen && selectedBookId !== null && (
         <Resume
           isOpen={isResumeOpen}

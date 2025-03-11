@@ -27,10 +27,12 @@ export default function Planning({ isOpen, onClose, onBookMoved }) {
     }
 
     const planningData = {
-      startDate,
-      endDate,
+      startDate: new Date(startDate).toISOString().split("T")[0],
+      endDate: new Date(endDate).toISOString().split("T")[0],
       books: [selectedBookId],
     };
+
+    console.log("📤 Відправляємо на сервер:", planningData);
 
     dispatch(currentlyRead(planningData))
       .unwrap()

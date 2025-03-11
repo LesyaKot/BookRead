@@ -126,19 +126,32 @@ const booksSlice = createSlice({
           };
         }
       })
-
+      
+      
+      
+      // .addCase(updateReadPages.fulfilled, (state, action) => {
+      //   const { bookId, pagesRead } = action.payload;
+      
+      //   const index = state.items.findIndex((book) => book._id === bookId);
+      //   if (index !== -1) {
+      //     state.items[index].pagesFinished += pagesRead; 
+      
+      //     if (state.items[index].pagesFinished >= state.items[index].pagesTotal) {
+      //       state.items[index].status = "finishedReading";
+      //     }
+      //   }
+      // });
+      
       .addCase(updateReadPages.fulfilled, (state, action) => {
-        const { bookId, updatedBook } = action.payload;
-
-        const index = state.items.findIndex((book) => book._id === bookId);
-        if (index !== -1) {
-          state.items[index].pagesFinished = updatedBook.pagesFinished;
-
-          if (updatedBook.pagesFinished === updatedBook.totalPages) {
-            state.items[index].status = "finishedReading";
-          }
+        const book = state.items.find((b) => b._id === action.payload.bookId);
+        if (book) {
+          book.pagesFinished = action.payload.pagesFinished;
         }
+        
       });
+  
+   
+      
   },
 });
 

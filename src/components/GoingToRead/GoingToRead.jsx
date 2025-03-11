@@ -34,9 +34,11 @@ export default function GoingToRead() {
       <ul className={css.list}>
         {goingToReadBooks.map((book) => (
           <li key={book._id} className={css.listItem}>
-            <MdMenuBook className={css.icon} />
-            <div className={css.textWrap}>
+            <div className={css.titleWrap}>
+              <MdMenuBook className={css.icon} />
               <p className={css.text}>{book.title}</p>
+            </div>
+            <div className={css.textWrap}>
               <p className={css.text}>
                 <span className={css.accent}>Author: </span> {book.author}
               </p>
