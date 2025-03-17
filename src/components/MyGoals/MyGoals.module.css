@@ -1,0 +1,152 @@
+.wrap {
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.title {
+  width: 280px;
+  height: 60px;
+  background-color: #b1b5c2;
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 44px;
+}
+
+.stats {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 44px 30px;
+}
+
+.amountWrap {
+  display: flex;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.amountTable {
+  width: 100px;
+  height: 100px;
+  background-color: #f5f7fa;
+  color: #091e3f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: Open Sans;
+  font-weight: 700;
+  font-size: 45px;
+  line-height: 38px;
+  text-align: center;
+  margin: 0;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.amountText {
+  color: #898f9f;
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  text-align: center;
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 75px;
+  height: 34px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 0;
+  margin: 0;
+}
+
+.listItem {
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14.63px;
+  color: #242a37;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  justify-content: flex-start;
+  text-align: left;
+  width: 280px;
+  padding: 20px;
+}
+.titleWrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.textWrap {
+  display: flex;
+  flex-direction: column;
+  padding-left: 50px;
+}
+
+.text {
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14.63px;
+  margin-bottom: 12px;
+  color: #242a37;
+  display: grid;
+  grid-template-columns: 100px auto;
+  gap: 35px;
+}
+
+.icon {
+  color: #a6abb9;
+  margin-right: 12px;
+  width: 22px;
+  height: 17px;
+}
+
+.btn {
+  width: 171px;
+  height: 42px;
+  padding-left: 36px;
+  padding-top: 12px;
+  background-color: #ff6b08;
+  color: #fff;
+  border-radius: 0%;
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+.chart {
+  width: 280px;
+  height: 290px;
+  padding: 20px 25px;
+ 
+  background-color: #fff;
+}

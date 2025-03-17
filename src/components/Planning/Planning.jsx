@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { currentlyRead } from "../../redux/book/operations";
+import { planning } from "../../redux/planning/operations";
 import { selectBooks } from "../../redux/book/selectors";
 import { toast } from "react-hot-toast";
 import { FaRegCalendarAlt } from "react-icons/fa";
@@ -34,7 +34,7 @@ export default function Planning({ isOpen, onClose, onBookMoved }) {
 
     console.log("📤 Відправляємо на сервер:", planningData);
 
-    dispatch(currentlyRead(planningData))
+    dispatch(planning(planningData))
       .unwrap()
       .then(() => {
         toast.success("Book moved to Currently Reading!");

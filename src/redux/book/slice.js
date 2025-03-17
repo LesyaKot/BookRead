@@ -1,16 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  addBook,
-  fetchBooks,
-  deleteBook,
-  currentlyRead,
-  resume,
-  updateReadPages,
-} from "./operations";
+import { addBook, fetchBooks, deleteBook, resume } from "./operations";
 
 const initialState = {
   items: [],
-  planning: null,
   isLoading: false,
   error: null,
 };
@@ -79,25 +71,6 @@ const booksSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      .addCase(currentlyRead.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(currentlyRead.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = null;
-
-        const bookId = action.meta.arg.books[0];
-        const index = state.items.findIndex((book) => book._id === bookId);
-        if (index !== -1) {
-          state.items[index].status = "currentlyReading";
-        }
-      })
-      .addCase(currentlyRead.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-
-      
       .addCase(resume.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
@@ -110,51 +83,14 @@ const booksSlice = createSlice({
         if (index !== -1) {
           state.items[index] = {
             ...state.items[index],
-            feedback: [
-              ...(Array.isArray(state.items[index].feedback)
-                ? state.items[index].feedback
-                : []),
-              updatedBook.feedback,
-            ],
-            rating: [
-              ...(Array.isArray(state.items[index].rating)
-                ? state.items[index].rating
-                : []),
-              updatedBook.rating,
-            ],
+            rating: updatedBook.rating,
+            feedback: updatedBook.feedback,
             status: "finishedReading",
           };
         }
-      })
-      
-      
-      
-      // .addCase(updateReadPages.fulfilled, (state, action) => {
-      //   const { bookId, pagesRead } = action.payload;
-      
-      //   const index = state.items.findIndex((book) => book._id === bookId);
-      //   if (index !== -1) {
-      //     state.items[index].pagesFinished += pagesRead; 
-      
-      //     if (state.items[index].pagesFinished >= state.items[index].pagesTotal) {
-      //       state.items[index].status = "finishedReading";
-      //     }
-      //   }
-      // });
-      
-      .addCase(updateReadPages.fulfilled, (state, action) => {
-        const book = state.items.find((b) => b._id === action.payload.bookId);
-        if (book) {
-          book.pagesFinished = action.payload.pagesFinished;
-        }
-        
       });
-  
-   
-      
   },
 });
 
 export const booksReducer = booksSlice.reducer;
-export const selectBooks = (state) => state.books.items || [];
-export const selectPlanning = (state) => state.books.planning;
+export const selectBooks = (state) => state.books?.items ?? [];

@@ -35,6 +35,13 @@ export default function Header({ onIconClick }) {
             <IoHomeOutline className={css.iconBook} width={22} height={17} />
           </div>
         </NavLink>
+
+        <NavLink
+          to="/planning"
+          className={({ isActive }) => (isActive ? css.active : css.link)}
+        >
+         Training
+        </NavLink>
       </nav>
 
       <div className={css.nameWrap}>

@@ -49,22 +49,10 @@ export default function AlreadyRead() {
               )}
               {book.feedback && (
                 <p className={css.review}>
-                  <span className={css.review}>Review: </span> {book.feedback}
+                  <span className={css.accent}>Review: </span> {book.feedback}
                 </p>
               )}
             </div>
-
-            <ul>
-              {Array.isArray(book.feedback) &&
-                book.feedback.map((review, index) => (
-                  <li key={index}>
-                    <Rating />
-                    <p>⭐ {book.rating[index]} stars</p>
-                    <p className={css.review}>{review}</p>
-                  </li>
-                ))}
-            </ul>
-
             <button
               className={css.btn}
               onClick={() => {

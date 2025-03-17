@@ -13,6 +13,7 @@ import storage from "redux-persist/lib/storage";
 import { modalReducer } from "./modal/slice.js";
 import { booksReducer } from "./book/slice.js";
 import { authReducer } from "./auth/slice";
+import { planningReducer } from "./planning/slice.js";
 
 const authPersistConfig = {
   key: "auth",
@@ -25,7 +26,8 @@ export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
     modal: modalReducer,
-    books: booksReducer
+    books: booksReducer,
+    planning: planningReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
