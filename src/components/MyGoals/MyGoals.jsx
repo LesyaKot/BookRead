@@ -1,9 +1,16 @@
 import annotationPlugin from "chartjs-plugin-annotation";
 ChartJS.register(annotationPlugin);
 import { useSelector } from "react-redux";
-import { selectBooks, selectPlanning } from "../../redux/book/selectors";
+import { useState } from "react";
+import { selectBooks } from "../../redux/book/selectors";
+import {
+  selectPlanning,
+  selectPlanningEnded,
+  selectIsLoading,
+} from "../../redux/planning/selectors";
 import { Line } from "react-chartjs-2";
 import { MdMenuBook } from "react-icons/md";
+import TimerModal from "../TimerModal/TimerModal";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -15,7 +22,9 @@ import {
   Legend,
 } from "chart.js";
 import css from "./MyGoals.module.css";
-
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getPlanning } from "../../redux/planning/operations";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -27,8 +36,21 @@ ChartJS.register(
 );
 
 export default function MyGoals() {
+  const dispatch = useDispatch();
+
+  const planningEnded = useSelector(selectPlanningEnded);
   const planning = useSelector(selectPlanning);
+  const isLoading = useSelector(selectIsLoading);
+
+  useEffect(() => {
+    if (isLoading || planningEnded || Object.keys(planning || {}).length > 0)
+      return;
+
+    dispatch(getPlanning());
+  }, [dispatch, isLoading, planning, planningEnded]);
+
   const books = useSelector(selectBooks);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const currentlyReadingBooks = books.filter(
     (book) => book.status === "currentlyReading"
@@ -39,23 +61,44 @@ export default function MyGoals() {
     (total, book) => total + book.pagesTotal,
     0
   );
-  const amountOfDays = planning?.stats?.length || currentlyReadingBooks.length;
+
+  const startDate = planning?.startDate ? new Date(planning.startDate) : null;
+  const endDate = planning?.endDate ? new Date(planning.endDate) : null;
+
+  const plannedDays =
+    startDate && endDate
+      ? Math.max(
+          1,
+          Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1
+        )
+      : currentlyReadingBooks.length;
+
+  const amountOfDays = plannedDays * currentlyReadingBooks.length;
   const pagesPerDay = amountOfDays
     ? Math.round(amountOfPages / amountOfDays)
     : 0;
 
+  console.log("Planned Pages per Day:", planning?.pagesPerDay);
+  console.log(
+    "Actual Pages per Day:",
+    planning?.stats?.map((stat) => stat.pagesCount)
+  );
+
+  const plannedData = planning?.pagesPerDay
+    ? Array(plannedDays).fill(planning.pagesPerDay)
+    : [];
+  const actualData = planning?.stats?.length
+    ? planning.stats.map((stat) => stat.pagesCount)
+    : [];
+
   const chartData = {
-    labels: Array(
-      planning?.stats?.length ?? currentlyReadingBooks.length ?? 0
-    ).fill(""),
+    labels: Array(plannedDays)
+      .fill("")
+      .map((_, index) => `Day ${index + 1}`),
     datasets: [
       {
-        label: "",
-        data: planning?.pagesPerDay
-          ? Array(
-              planning?.stats?.length ?? currentlyReadingBooks.length ?? 0
-            ).fill(planning.pagesPerDay)
-          : Array(currentlyReadingBooks.length).fill(0),
+        label: "Planned",
+        data: plannedData,
         borderColor: "#242A37",
         borderWidth: 2,
         pointRadius: 0,
@@ -63,10 +106,8 @@ export default function MyGoals() {
         tension: 0.4,
       },
       {
-        label: "",
-        data:
-          planning?.stats?.map((stat) => stat.pagesCount) ??
-          currentlyReadingBooks.map((book) => book.pagesFinished),
+        label: "Actual",
+        data: actualData,
         borderColor: "#FF6B08",
         borderWidth: 2,
         pointRadius: 0,
@@ -94,7 +135,7 @@ export default function MyGoals() {
         annotations: {
           planLabel: {
             type: "label",
-            xValue: amountOfDays - 1,
+            xValue: plannedDays - 1,
             yValue: planning?.pagesPerDay || 0,
             content: "PLAN",
             color: "#242A37",
@@ -102,24 +143,21 @@ export default function MyGoals() {
               size: 14,
               weight: "bold",
             },
-            xAdjust: -50,
-            yAdjust: -10,
+            xAdjust: -30,
+            yAdjust: 20,
           },
           actLabel: {
             type: "label",
-            xValue: amountOfDays - 1,
-            yValue:
-              planning?.stats?.slice(-1)[0]?.pagesCount ||
-              currentlyReadingBooks.slice(-1)[0]?.pagesFinished ||
-              0,
+            xValue: planning?.stats?.length - 1 || 0,
+            yValue: planning?.stats?.slice(-1)[0]?.pagesCount || 0,
             content: "ACT",
             color: "#FF6B08",
             font: {
               size: 14,
               weight: "bold",
             },
-            xAdjust: -60,
-            yAdjust: -10,
+            xAdjust: 10,
+            yAdjust: 15,
           },
         },
       },
@@ -129,17 +167,10 @@ export default function MyGoals() {
         ticks: {
           display: false,
         },
-        grid: {
-          drawTicks: false,
-        },
       },
       y: {
         ticks: {
           display: false,
-        },
-        grid: {
-          drawTicks: false,
-          drawBorder: false,
         },
       },
     },
@@ -170,17 +201,16 @@ export default function MyGoals() {
                     <MdMenuBook className={css.icon} />
                     <p className={css.text}>{book.title}</p>
                   </div>
-
                   <div className={css.textWrap}>
                     <p className={css.text}>
-                      <span className={css.accent}>Author: </span> {book.author}
+                      <span className={css.accent}>Author:</span> {book.author}
                     </p>
                     <p className={css.text}>
-                      <span className={css.accent}>Year: </span>{" "}
+                      <span className={css.accent}>Year:</span>{" "}
                       {book.publishYear}
                     </p>
                     <p className={css.text}>
-                      <span className={css.accent}>Pages: </span>{" "}
+                      <span className={css.accent}>Pages:</span>{" "}
                       {book.pagesTotal}
                     </p>
                   </div>
@@ -189,7 +219,15 @@ export default function MyGoals() {
             </ul>
           </div>
 
-          <button className={css.btn}>Start training</button>
+          <div className={css.timerWrap}>
+            <button onClick={() => setIsModalOpen(true)}>Start training</button>
+            {isModalOpen && (
+              <TimerModal
+                onClose={() => setIsModalOpen(false)}
+                goalDate={endDate}
+              />
+            )}
+          </div>
 
           <div className={css.chart}>
             <Line data={chartData} options={chartOptions} />

@@ -1,6 +1,7 @@
 import UserMenu from "../UserMenu/UserMenu";
 import { MdMenuBook } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
+import { IoFitnessOutline } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 import Logo from "../Logo/Logo";
 import PropTypes from "prop-types";
@@ -8,6 +9,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/auth/selectors";
 import "react-toastify/dist/ReactToastify.css";
 import css from "./Header.module.css";
+
 
 export default function Header({ onIconClick }) {
   const user = useSelector(selectUser);
@@ -40,7 +42,9 @@ export default function Header({ onIconClick }) {
           to="/planning"
           className={({ isActive }) => (isActive ? css.active : css.link)}
         >
-         Training
+          <div className={css.iconHomeWrap}>
+            <IoFitnessOutline className={css.iconBook} width={22} height={17} />
+          </div>
         </NavLink>
       </nav>
 

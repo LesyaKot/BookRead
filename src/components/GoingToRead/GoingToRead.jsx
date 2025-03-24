@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBooks } from "../../redux/book/operations.js";
+import { fetchBooks, deleteBook } from "../../redux/book/operations.js";
 import { selectBooks } from "../../redux/book/selectors.js";
 import { MdMenuBook } from "react-icons/md";
 import Planning from "../Planning/Planning.jsx";
+import { FaRegTrashCan } from "react-icons/fa6";
 import css from "./GoingToRead.module.css";
 
 export default function GoingToRead() {
@@ -37,6 +38,18 @@ export default function GoingToRead() {
             <div className={css.titleWrap}>
               <MdMenuBook className={css.icon} />
               <p className={css.text}>{book.title}</p>
+              <FaRegTrashCan
+                className={css.icon}
+                onClick={() => {
+                  if (book.status === "goingToRead") {
+                    dispatch(deleteBook(book._id));
+                  } else {
+                    alert(
+                      "You can only delete books from 'Going to Read' list."
+                    );
+                  }
+                }}
+              />
             </div>
             <div className={css.textWrap}>
               <p className={css.text}>

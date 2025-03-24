@@ -32,8 +32,6 @@ export default function Planning({ isOpen, onClose, onBookMoved }) {
       books: [selectedBookId],
     };
 
-    console.log("📤 Відправляємо на сервер:", planningData);
-
     dispatch(planning(planningData))
       .unwrap()
       .then(() => {
