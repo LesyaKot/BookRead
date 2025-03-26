@@ -119,6 +119,13 @@ export default function MyGoals() {
 
   const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
+    layout: {
+      padding: {
+        top: 30,
+        bottom: 30,
+      },
+    },
     plugins: {
       legend: {
         display: false,
@@ -127,28 +134,33 @@ export default function MyGoals() {
         display: true,
         text: `Amount of pages / DA ${pagesPerDay}`,
         align: "start",
+        color: "#091E3F",
         font: {
           size: 16,
+        },
+        padding: {
+          top: 30,
+          bottom: 50,
         },
       },
       annotation: {
         annotations: {
           planLabel: {
             type: "label",
-            xValue: plannedDays - 1,
+            xValue: plannedDays - 2,
             yValue: planning?.pagesPerDay || 0,
             content: "PLAN",
-            color: "#242A37",
+            color: "#091E3F",
             font: {
               size: 14,
               weight: "bold",
             },
-            xAdjust: -30,
-            yAdjust: 20,
+            xAdjust: -15,
+            yAdjust: -20,
           },
           actLabel: {
             type: "label",
-            xValue: planning?.stats?.length - 1 || 0,
+            xValue: Math.min(planning?.stats?.length - 2, plannedDays - 2),
             yValue: planning?.stats?.slice(-1)[0]?.pagesCount || 0,
             content: "ACT",
             color: "#FF6B08",
@@ -156,26 +168,43 @@ export default function MyGoals() {
               size: 14,
               weight: "bold",
             },
-            xAdjust: 10,
-            yAdjust: 15,
+            xAdjust: -5,
+            yAdjust: -20,
+          },
+        },
+      },
+
+      scales: {
+        x: {
+          ticks: {
+            display: false,
+          },
+          grid: {
+            display: false,
+          },
+          title: {
+            display: true,
+            text: "TIME",
+            font: {
+              size: 14,
+              weight: "bold",
+            },
+            color: "#091E3F",
+            align: "end",
+            padding: { top: 10 },
+          },
+        },
+        y: {
+          ticks: {
+            display: false,
+          },
+          grid: {
+            display: false,
           },
         },
       },
     },
-    scales: {
-      x: {
-        ticks: {
-          display: false,
-        },
-      },
-      y: {
-        ticks: {
-          display: false,
-        },
-      },
-    },
   };
-
   return (
     <div className={css.wrap}>
       <h2 className={css.title}>My Goals</h2>
