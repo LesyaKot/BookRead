@@ -1,5 +1,6 @@
 import MyGoals from "../components/MyGoals/MyGoals";
 import Header from "../components/Header/Header";
+import Result from "../components/Result/Result";
 
 
 export default function Training(){
@@ -10,6 +11,7 @@ export default function Training(){
         <div>
             <Header onIconClick={handleIconClick}/>
             <MyGoals />
+            <Result />
         </div>
     )
 }
