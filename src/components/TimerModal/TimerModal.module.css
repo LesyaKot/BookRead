@@ -1,0 +1,20 @@
+.title {
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  color: #898f9f;
+  margin-top: 20px;
+  margin-bottom: 9px;
+}
+.btn{
+    margin-top: 40px;
+    width: 171px;
+  height: 42px;
+  padding-left: 36px;
+  padding-top: 12px;  
+  color: #898f9f;
+  border-radius: 0%;
+  margin-top: 32px;
+  margin-bottom: 32px;
+}

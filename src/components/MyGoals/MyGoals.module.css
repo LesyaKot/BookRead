@@ -1,5 +1,5 @@
 .wrap {
-  background-color: #ffffff;
+  background-color: #F6F7FB;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,7 +22,8 @@
   justify-content: center;
   text-align: center;
   color: #fff;
-  margin-bottom: 44px;
+  /* margin-bottom: 44px; */
+  margin: 0;
 }
 
 .stats {
@@ -32,6 +33,7 @@
   justify-content: center;
   gap: 20px;
   padding: 44px 30px;
+  background-color: #ffffff;
 }
 
 .amountWrap {
@@ -83,6 +85,7 @@
   align-items: flex-start;
   padding: 0;
   margin: 0;
+  
 }
 
 .listItem {
@@ -91,7 +94,7 @@
   font-size: 12px;
   line-height: 14.63px;
   color: #242a37;
-  background-color: #fff;
+  background-color: #F6F7FB;
   display: flex;
   flex-direction: column;
   align-items: baseline;
@@ -143,11 +146,20 @@
   margin-top: 32px;
   margin-bottom: 32px;
 }
+.trainBtn {
+  background-color: #ff6b08;
+  color: #fff;
+  width: 171px;
+  height: 42px;
+  border-radius: 0%;
+}
 
 .chart {
   width: 280px;
   height: 290px;
   padding: 20px 25px;
   background-color: #fff;
- }
-
+  padding: 12px 36px;
+  margin-top: 44px;
+  margin-bottom: 45px;
+}

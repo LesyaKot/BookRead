@@ -249,7 +249,7 @@ export default function MyGoals() {
           </div>
 
           <div className={css.timerWrap}>
-            <button onClick={() => setIsModalOpen(true)}>Start training</button>
+            <button className={css.trainBtn} onClick={() => setIsModalOpen(true)}>Start training</button>
             {isModalOpen && (
               <TimerModal
                 onClose={() => setIsModalOpen(false)}
