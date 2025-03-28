@@ -43,51 +43,52 @@ export default function Result() {
 
   return (
     <div className={css.wrap}>
-      <h2>RESULT</h2>
-      <div className={css.inputWrap}>
-        <label>Date</label>
-        <DatePicker
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
-          placeholderText="26.03.2025"
-          dateFormat="dd/MM/yyyy"
-          className={css.input}
-          customInput={<input className={css.inputWithIcon} />}
-        />
-      </div>
+      <h2 className={css.title}>RESULT</h2>
+      <div className={css.inputCont}>
+        <div className={css.inputWrap}>
+          <label className={css.label}>Date</label>
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            placeholderText="26.03.2025"
+            dateFormat="dd/MM/yyyy"
+            className={css.input}
+            customInput={<input className={css.inputWithIcon} />}
+          />
+        </div>
 
-      <div className={css.inputWrap}>
-        <label>Amount of pages</label>
-        <input
-          className={css.pagesInput}
-          type="number"
-          value={numberOfPages}
-          onChange={(e) => setNumberOfPages(e.target.value)}
-          placeholder="32"
-        />
+        <div className={css.inputWrap}>
+          <label className={css.label}>Amount of pages</label>
+          <input
+            className={css.input}
+            type="number"
+            value={numberOfPages}
+            onChange={(e) => setNumberOfPages(e.target.value)}
+            placeholder="32"
+          />
+        </div>
       </div>
-
       <button className={css.addBtn} onClick={handleAddPages}>
         Add result
       </button>
 
       <div>
-        <h2>STATISTICS</h2>
+        <h2 className={css.title}>STATISTICS</h2>
         <table cellPadding="8" style={{ margin: "20px auto", width: "100%" }}>
-          <thead>
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
+          <thead></thead>
           <tbody>
             {planning?.stats?.length > 0 ? (
               planning.stats.map((stat, index) => (
                 <tr key={index}>
-                  <td>{new Date(stat.time).toLocaleDateString()}</td>
-                  <td>{new Date(stat.time).toLocaleTimeString()}</td>
-                  <td>{stat.pagesCount}</td>
+                  <td className={css.date}>
+                    {new Date(stat.time).toLocaleDateString()}
+                  </td>
+                  <td className={css.hour}>
+                    {new Date(stat.time).toLocaleTimeString()}
+                  </td>
+                  <td className={css.readPages}>
+                    {stat.pagesCount} <span className={css.hour}>pages</span>
+                  </td>
                 </tr>
               ))
             ) : (
