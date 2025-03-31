@@ -45,13 +45,16 @@ export default function UserMenu() {
       {isModalOpen && (
         <div className={css.backdrop} onClick={handleCloseModal}>
           <div className={css.modal} onClick={(e) => e.stopPropagation()}>
-            <p>Are you sure you want to log out?</p>
+            <p className={css.text}>
+              The changes you made will be lost if you navigate away from this
+              application
+            </p>
             <div className={css.buttonContainer}>
-              <button onClick={handleLogout} className={css.confirmBtn}>
-                Yes
+              <button className={css.btn} onClick={handleLogout}>
+                Leave
               </button>
-              <button onClick={handleCloseModal} className={css.cancelBtn}>
-                No
+              <button className={css.btn} onClick={handleCloseModal}>
+                Cancel
               </button>
             </div>
           </div>
