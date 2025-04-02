@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { planning } from "../../redux/planning/operations";
+import { planning, getPlanning } from "../../redux/planning/operations";
 import { selectBooks } from "../../redux/book/selectors";
 import { toast } from "react-hot-toast";
 import { FaRegCalendarAlt } from "react-icons/fa";
@@ -15,10 +15,16 @@ export default function Planning({ isOpen, onClose, onBookMoved }) {
   const goingToReadBooks = books.filter(
     (book) => book.status === "goingToRead"
   );
-
+  const token = useSelector((state) => state.auth.token);
   const [selectedBookId, setSelectedBookId] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(getPlanning());
+    }
+  }, [dispatch, token]);
 
   const handleCurrentlyRead = () => {
     if (!selectedBookId || !startDate || !endDate) {

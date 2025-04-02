@@ -18,8 +18,8 @@ const planningSlice = createSlice({
       })
 
       .addCase(planning.fulfilled, (state, action) => {
-        console.log("📚 Planning after fetch:", action.payload);
-        console.log("🟢 Оновлення Redux:", action.payload);
+        console.log(" Planning after fetch:", action.payload);
+        console.log(" Оновлення Redux:", action.payload);
         state.planning = action.payload;
         state.planningEnded = false;
       })
@@ -46,7 +46,7 @@ const planningSlice = createSlice({
       })
 
       .addCase(getPlanning.fulfilled, (state, action) => {
-        console.log("📚 Planning після успішного запиту:", action.payload);
+        console.log(" Planning після успішного запиту:", action.payload);
         state.isLoading = false;
         state.planning = action.payload?.planning || action.payload;
       })

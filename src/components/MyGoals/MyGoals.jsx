@@ -43,8 +43,14 @@ export default function MyGoals() {
   const isLoading = useSelector(selectIsLoading);
 
   useEffect(() => {
-    if (isLoading || planningEnded || Object.keys(planning || {}).length > 0)
+    if (
+      isLoading ||
+      planningEnded ||
+      !planning ||
+      Object.keys(planning).length > 0
+    ) {
       return;
+    }
 
     dispatch(getPlanning());
   }, [dispatch, isLoading, planning, planningEnded]);
@@ -249,7 +255,12 @@ export default function MyGoals() {
           </div>
 
           <div className={css.timerWrap}>
-            <button className={css.trainBtn} onClick={() => setIsModalOpen(true)}>Start training</button>
+            <button
+              className={css.trainBtn}
+              onClick={() => setIsModalOpen(true)}
+            >
+              Start training
+            </button>
             {isModalOpen && (
               <TimerModal
                 onClose={() => setIsModalOpen(false)}
