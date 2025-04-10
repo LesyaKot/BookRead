@@ -15,37 +15,60 @@ export default function Planning({ isOpen, onClose, onBookMoved }) {
   const goingToReadBooks = books.filter(
     (book) => book.status === "goingToRead"
   );
-  const token = useSelector((state) => state.auth.token);
-  const [selectedBookId, setSelectedBookId] = useState("");
+
+  const [selectedBookIds, setSelectedBookIds] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
   useEffect(() => {
-    if (token) {
-      dispatch(getPlanning());
-    }
-  }, [dispatch, token]);
+    dispatch(getPlanning());
+  }, [dispatch]);
 
-  const handleCurrentlyRead = () => {
-    if (!selectedBookId || !startDate || !endDate) {
+  const handleCurrentlyRead = async () => {
+    if (selectedBookIds.length === 0 || !startDate || !endDate) {
       toast.error("Please fill in all fields!");
       return;
     }
 
-    const planningData = {
-      startDate: new Date(startDate).toISOString().split("T")[0],
-      endDate: new Date(endDate).toISOString().split("T")[0],
-      books: [selectedBookId],
-    };
+    try {
+      let existingPlanning;
 
-    dispatch(planning(planningData))
-      .unwrap()
-      .then(() => {
-        toast.success("Book moved to Currently Reading!");
-        onBookMoved(selectedBookId);
-        onClose();
-      })
-      .catch(() => toast.error("Failed to move book"));
+      try {
+        existingPlanning = await dispatch(getPlanning()).unwrap();
+      } catch (error) {
+        existingPlanning = null;
+      }
+
+      const planningData = {
+        startDate: new Date(startDate).toISOString().split("T")[0],
+        endDate: new Date(endDate).toISOString().split("T")[0],
+        books: selectedBookIds,
+      };
+
+      if (existingPlanning) {
+        const existingBooks = existingPlanning?.books || [];
+        const existingBookIds = existingBooks.map((book) => book._id);
+        const allBookIds = Array.from(
+          new Set([...existingBookIds, ...selectedBookIds])
+        );
+
+        planningData.books = allBookIds;
+      }
+
+      await dispatch(planning(planningData)).unwrap();
+      toast.success("Books added to the reading plan!");
+
+      selectedBookIds.forEach((id) => onBookMoved(id));
+      onClose();
+    } catch (error) {
+      console.error("Planning update error:", error);
+      toast.error("Failed to update planning");
+    }
+  };
+
+  const handleSelectChange = (e) => {
+    const selected = Array.from(e.target.selectedOptions).map((o) => o.value);
+    setSelectedBookIds(selected);
   };
 
   return (
@@ -58,6 +81,7 @@ export default function Planning({ isOpen, onClose, onBookMoved }) {
           <button className={css.closeBtn} onClick={onClose}>
             ✖
           </button>
+
           <div className={css.inputWrap}>
             <FaRegCalendarAlt className={css.icon} />
             <DatePicker
@@ -84,13 +108,12 @@ export default function Planning({ isOpen, onClose, onBookMoved }) {
 
           <div className={css.inputWrap}>
             <select
-              value={selectedBookId}
-              onChange={(e) => setSelectedBookId(e.target.value)}
+              multiple
+              value={selectedBookIds}
+              onChange={handleSelectChange}
               className={css.input}
             >
-              <option value="" disabled>
-                Choose book from the library
-              </option>
+              <option disabled>Choose books from the library</option>
               {goingToReadBooks.map((book) => (
                 <option key={book._id} value={book._id}>
                   {book.title}

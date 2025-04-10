@@ -1,13 +1,6 @@
 import annotationPlugin from "chartjs-plugin-annotation";
-ChartJS.register(annotationPlugin);
-import { useSelector } from "react-redux";
-import { useState } from "react";
-import { selectBooks } from "../../redux/book/selectors";
-import {
-  selectPlanning,
-  selectPlanningEnded,
-  selectIsLoading,
-} from "../../redux/planning/selectors";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { MdMenuBook } from "react-icons/md";
 import TimerModal from "../TimerModal/TimerModal";
@@ -21,10 +14,15 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import css from "./MyGoals.module.css";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { selectBooks } from "../../redux/book/selectors";
+import {
+  selectPlanning,
+  selectPlanningEnded,
+  selectIsLoading,
+} from "../../redux/planning/selectors";
 import { getPlanning } from "../../redux/planning/operations";
+import css from "./MyGoals.module.css";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -32,15 +30,19 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  annotationPlugin
 );
 
 export default function MyGoals() {
   const dispatch = useDispatch();
 
-  const planningEnded = useSelector(selectPlanningEnded);
   const planning = useSelector(selectPlanning);
+  const planningEnded = useSelector(selectPlanningEnded);
   const isLoading = useSelector(selectIsLoading);
+  const books = useSelector(selectBooks);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (
@@ -51,12 +53,8 @@ export default function MyGoals() {
     ) {
       return;
     }
-
     dispatch(getPlanning());
   }, [dispatch, isLoading, planning, planningEnded]);
-
-  const books = useSelector(selectBooks);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const currentlyReadingBooks = books.filter(
     (book) => book.status === "currentlyReading"
@@ -84,12 +82,6 @@ export default function MyGoals() {
     ? Math.round(amountOfPages / amountOfDays)
     : 0;
 
-  console.log("Planned Pages per Day:", planning?.pagesPerDay);
-  console.log(
-    "Actual Pages per Day:",
-    planning?.stats?.map((stat) => stat.pagesCount)
-  );
-
   const plannedData = planning?.pagesPerDay
     ? Array(plannedDays).fill(planning.pagesPerDay)
     : [];
@@ -97,30 +89,36 @@ export default function MyGoals() {
     ? planning.stats.map((stat) => stat.pagesCount)
     : [];
 
+  const hasPlanning = planning && Object.keys(planning).length > 0;
+
   const chartData = {
-    labels: Array(plannedDays)
-      .fill("")
-      .map((_, index) => `Day ${index + 1}`),
-    datasets: [
-      {
-        label: "Planned",
-        data: plannedData,
-        borderColor: "#242A37",
-        borderWidth: 2,
-        pointRadius: 0,
-        fill: false,
-        tension: 0.4,
-      },
-      {
-        label: "Actual",
-        data: actualData,
-        borderColor: "#FF6B08",
-        borderWidth: 2,
-        pointRadius: 0,
-        fill: false,
-        tension: 0.4,
-      },
-    ],
+    labels: hasPlanning
+      ? Array(plannedDays)
+          .fill("")
+          .map((_, index) => `Day ${index + 1}`)
+      : [],
+    datasets: hasPlanning
+      ? [
+          {
+            label: "Planned",
+            data: plannedData,
+            borderColor: "#242A37",
+            borderWidth: 2,
+            pointRadius: 0,
+            fill: false,
+            tension: 0.4,
+          },
+          {
+            label: "Actual",
+            data: actualData,
+            borderColor: "#FF6B08",
+            borderWidth: 2,
+            pointRadius: 0,
+            fill: false,
+            tension: 0.4,
+          },
+        ]
+      : [],
   };
 
   const chartOptions = {
@@ -137,8 +135,8 @@ export default function MyGoals() {
         display: false,
       },
       title: {
-        display: true,
-        text: `Amount of pages / DA ${pagesPerDay}`,
+        display: hasPlanning,
+        text: hasPlanning ? `Amount of pages / DA ${pagesPerDay}` : "",
         align: "start",
         color: "#091E3F",
         font: {
@@ -150,67 +148,78 @@ export default function MyGoals() {
         },
       },
       annotation: {
-        annotations: {
-          planLabel: {
-            type: "label",
-            xValue: plannedDays - 2,
-            yValue: planning?.pagesPerDay || 0,
-            content: "PLAN",
-            color: "#091E3F",
-            font: {
-              size: 14,
-              weight: "bold",
-            },
-            xAdjust: -15,
-            yAdjust: -20,
-          },
-          actLabel: {
-            type: "label",
-            xValue: Math.min(planning?.stats?.length - 2, plannedDays - 2),
-            yValue: planning?.stats?.slice(-1)[0]?.pagesCount || 0,
-            content: "ACT",
-            color: "#FF6B08",
-            font: {
-              size: 14,
-              weight: "bold",
-            },
-            xAdjust: -5,
-            yAdjust: -20,
-          },
-        },
-      },
-
-      scales: {
-        x: {
-          ticks: {
-            display: false,
-          },
-          grid: {
-            display: false,
-          },
-          title: {
-            display: true,
-            text: "TIME",
-            font: {
-              size: 14,
-              weight: "bold",
-            },
-            color: "#091E3F",
-            align: "end",
-            padding: { top: 10 },
-          },
-        },
-        y: {
-          ticks: {
-            display: false,
-          },
-          grid: {
-            display: false,
-          },
-        },
+        annotations: hasPlanning
+          ? {
+              planLabel: {
+                type: "label",
+                xValue: plannedDays - 2,
+                yValue: planning?.pagesPerDay || 0,
+                content: "PLAN",
+                color: "#091E3F",
+                font: {
+                  size: 14,
+                  weight: "bold",
+                },
+                xAdjust: -15,
+                yAdjust: -20,
+              },
+              actLabel: {
+                type: "label",
+                xValue: Math.min(planning?.stats?.length - 2, plannedDays - 2),
+                yValue: planning?.stats?.slice(-1)[0]?.pagesCount || 0,
+                content: "ACT",
+                color: "#FF6B08",
+                font: {
+                  size: 14,
+                  weight: "bold",
+                },
+                xAdjust: -5,
+                yAdjust: -20,
+              },
+            }
+          : {},
       },
     },
+    scales: hasPlanning
+      ? {
+          x: {
+            ticks: {
+              display: false,
+            },
+            grid: {
+              display: false,
+            },
+            title: {
+              display: true,
+              text: "TIME",
+              font: {
+                size: 14,
+                weight: "bold",
+              },
+              color: "#091E3F",
+              align: "end",
+              padding: { top: 10 },
+            },
+          },
+          y: {
+            ticks: {
+              display: false,
+            },
+            grid: {
+              display: false,
+            },
+          },
+        }
+      : {
+          x: {
+            display: false,
+          },
+          y: {
+            display: false,
+          },
+        },
   };
+
   return (
     <div className={css.wrap}>
       <h2 className={css.title}>My Goals</h2>

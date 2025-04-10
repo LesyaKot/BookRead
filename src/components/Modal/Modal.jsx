@@ -7,6 +7,7 @@ import { MdMenuBook } from "react-icons/md";
 import { CiFlag1 } from "react-icons/ci";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import { FaLongArrowAltLeft } from "react-icons/fa";
+import { toast } from "react-hot-toast";
 
 
 
@@ -50,6 +51,7 @@ export default function Modal({ isOpen, onClose }) {
     }
 
     setErrors(newErrors);
+    toast.success("🎉 Congratulations! New book added.");
     return Object.keys(newErrors).length === 0;
   };
 

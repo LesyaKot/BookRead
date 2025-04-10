@@ -8,6 +8,7 @@ import {
   selectPlanning,
   selectIsLoading,
 } from "../../redux/planning/selectors";
+
 import css from "./Result.module.css";
 
 export default function Result() {
@@ -31,13 +32,38 @@ export default function Result() {
     }
 
     try {
-      await dispatch(updatePlanning({ pages: Number(numberOfPages) }));
-      toast.success("Прочитані сторінки успішно додані!");
-      dispatch(getPlanning());
+      const prevFinishedBookIds =
+        planning?.books?.length > 0
+          ? planning.books
+              .filter((book) => book.pagesFinished >= book.pagesTotal)
+              .map((book) => book._id)
+          : [];
+
+      await dispatch(updatePlanning({ pages: Number(numberOfPages) })).unwrap();
+
+      const updatedPlanning = await dispatch(getPlanning()).unwrap();
+
+      const updatedBooks = updatedPlanning?.books || [];
+
+      const newFinishedBooks = updatedBooks.filter(
+        (book) =>
+          book.pagesFinished >= book.pagesTotal &&
+          !prevFinishedBookIds.includes(book._id)
+      );
+
+      if (newFinishedBooks.length > 0) {
+        toast.success("🎉 Congratulations! Another book read.");
+      } else {
+        toast.success(
+          "Well done! but you need to be a little bit faster. You can do it! 💪"
+        );
+      }
+
       setStartDate(null);
       setNumberOfPages("");
     } catch (error) {
-      toast.error(error, "Не вдалося додати сторінки");
+      console.error(error);
+      toast("🎉 Congratulations! Another book read.");
     }
   };
 
@@ -93,7 +119,7 @@ export default function Result() {
               ))
             ) : (
               <tr>
-                <td colSpan="3">Немає даних для відображення</td>
+                <td colSpan="3"></td>
               </tr>
             )}
           </tbody>
