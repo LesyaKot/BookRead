@@ -56,11 +56,33 @@ export const register = createAsyncThunk(
           "Content-Type": "application/json",
         },
       });
+      console.log("Register response:", response);
 
-      setAuthHeader(response.data.token);
-      return response.data;
+      const loginResponse = await axios.post("/auth/login", {
+        email: newUser.email,
+        password: newUser.password,
+      });
+
+      if (loginResponse.data.accessToken) {
+        setAuthHeader(loginResponse.data.accessToken);
+
+        localStorage.setItem("token", loginResponse.data.accessToken);
+        localStorage.setItem(
+          "user",
+          JSON.stringify(loginResponse.data.userData)
+        );
+      } else {
+        throw new Error("Access token not found in login response");
+      }
+
+      return {
+        accessToken: loginResponse.data.accessToken,
+        refreshToken: loginResponse.data.refreshToken,
+        sid: loginResponse.data.sid,
+        userData: loginResponse.data.userData,
+      };
     } catch (error) {
-      console.error("error:", error.response?.data || error.message);
+      console.error("Error:", error.response?.data || error.message);
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
     }
   }
@@ -80,6 +102,7 @@ export const logIn = createAsyncThunk(
     }
   }
 );
+
 // log out
 export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
@@ -89,17 +112,8 @@ export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
     if (!token) {
       return thunkAPI.rejectWithValue("No token provided");
     }
-
-    await axios.post(
-      "https://bookread-backend.goit.global/auth/logout",
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
+    setAuthHeader(token);
+    await axios.post("/auth/logout");
     return true;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data || error.message);
@@ -120,7 +134,7 @@ export const refreshUser = createAsyncThunk(
     try {
       const response = await axios.post(
         "/auth/refresh",
-        { sid }, 
+        { sid },
         { withCredentials: true }
       );
       return response.data;
@@ -129,4 +143,3 @@ export const refreshUser = createAsyncThunk(
     }
   }
 );
-

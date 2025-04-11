@@ -1,46 +1,42 @@
 import { useDispatch } from "react-redux";
 import { register } from "../../redux/auth/operations";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import css from "./RegisterForm.module.css";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import GoogleLoginBtn from "../GoogleLoginBtn/GoogleLoginBtn";
+import { toast } from "react-toastify";
 import { BsAsterisk } from "react-icons/bs";
+import { Link, useNavigate } from "react-router-dom";
+import GoogleLoginBtn from "../GoogleLoginBtn/GoogleLoginBtn";
 import Logo from "../Logo/Logo";
-import { Link } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import css from "./RegisterForm.module.css";
 
 export default function RegisterForm() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (values, actions) => {
+    console.log("handleSubmit with:", values);
     const userData = { ...values };
     delete userData.confirmPassword;
 
     try {
       const result = await dispatch(register(userData)).unwrap();
-      toast.success(`Користувач ${result.user.name} успішно зареєстрований!`);
+      console.log("✅ Registered user:", result);
+
+      if (result.token) {
+        localStorage.setItem("token", result.token);
+      }
+
+      toast.success(`User ${result.userData.name} successfully registered!`);
+      setTimeout(() => {
+        navigate("/books");
+      }, 2000);
+
       actions.resetForm();
     } catch (error) {
-      console.error(error);
-      toast.error("Не вдалося зареєструвати користувача. Спробуйте ще раз.");
+      console.error("❌ Register error:", error);
+      toast.error("Can't register, please try again.");
     }
   };
-
-  const validationSchema = Yup.object({
-    name: Yup.string()
-      .min(2, "Ім'я повинно містити щонайменше 2 символи")
-      .required("Ім'я є обов'язковим"),
-    email: Yup.string()
-      .email("Невірний формат електронної пошти")
-      .required("Електронна пошта є обов'язковою"),
-    password: Yup.string()
-      .min(6, "Пароль повинен містити щонайменше 6 символів")
-      .required("Пароль є обов'язковим"),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Паролі не співпадають")
-      .required("Підтвердження пароля є обов'язковим"),
-  });
 
   return (
     <>
@@ -58,7 +54,6 @@ export default function RegisterForm() {
               password: "",
               confirmPassword: "",
             }}
-            validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
             <Form className={css.form} autoComplete="off">
@@ -125,8 +120,6 @@ export default function RegisterForm() {
               </div>
             </Form>
           </Formik>
-
-          <ToastContainer position="top-center" autoClose={3000} />
         </div>
       </div>
     </>

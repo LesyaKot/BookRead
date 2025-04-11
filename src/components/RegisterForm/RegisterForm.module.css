@@ -98,3 +98,7 @@
   text-align: center;
   color: #a6abb9;
 }
+
+.Toastify__toast-container {
+  z-index: 9999 !important;
+}

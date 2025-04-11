@@ -10,7 +10,6 @@ import { selectUser } from "../../redux/auth/selectors";
 import "react-toastify/dist/ReactToastify.css";
 import css from "./Header.module.css";
 
-
 export default function Header({ onIconClick }) {
   const user = useSelector(selectUser);
 
@@ -52,10 +51,11 @@ export default function Header({ onIconClick }) {
         {user?.name ? (
           <>
             <div className={css.firstLetterWrap}>
-              <p className={css.firstLetterWrap}>
+              <p className={css.firstLetter}>
                 {user.name.charAt(0).toUpperCase()}
               </p>
             </div>
+
             <p className={css.userName}>{getFirstName(user.name)}</p>
           </>
         ) : (
