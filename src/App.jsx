@@ -9,14 +9,12 @@ import { refreshUser } from "../src/redux/auth/operations";
 import { useAuth } from "../src/redux/auth/selectors";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import GoogleAuthRedirect from "./pages/GoogleAuthRedirect";
 
 const HomePage = lazy(() => import("../src/pages/Home"));
 const RegisterPage = lazy(() => import("../src/pages/Register"));
 const LoginPage = lazy(() => import("../src/pages/Login"));
 const LibraryPage = lazy(() => import("../src/pages/Library"));
 const TrainingPage = lazy(() => import("./pages/Training"));
-
 
 export default function App() {
   const dispatch = useDispatch();
@@ -36,8 +34,6 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
-          <Route path="/google" element={<GoogleAuthRedirect />} />
-
           <Route
             path="/register"
             element={

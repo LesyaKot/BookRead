@@ -3,7 +3,6 @@ import { logIn } from "../../redux/auth/operations";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { BsAsterisk } from "react-icons/bs";
-import GoogleLoginBtn from "../GoogleLoginBtn/GoogleLoginBtn";
 import css from "./LogInForm.module.css";
 import { FaQuoteLeft } from "react-icons/fa";
 import Logo from "../Logo/Logo";
@@ -32,8 +31,6 @@ export default function LogInForm() {
         <Logo />
       </div>
       <div className={css.wrap}>
-        <GoogleLoginBtn />
-
         <Formik
           initialValues={{
             email: "",

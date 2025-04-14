@@ -63,7 +63,7 @@ export default function Result() {
       setNumberOfPages("");
     } catch (error) {
       console.error(error);
-      toast("🎉 Congratulations! Another book read.");
+      toast("🎉 Congratulations! Another book read. You can start new book!");
     }
   };
 
