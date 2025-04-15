@@ -50,7 +50,7 @@ export default function RegisterForm() {
               name: "",
               email: "",
               password: "",
-              confirmPassword: "",
+           
             }}
             onSubmit={handleSubmit}
           >
@@ -106,6 +106,7 @@ export default function RegisterForm() {
                 />
               </label>
 
+              
               <button className={css.btn} type="submit">
                 Register
               </button>

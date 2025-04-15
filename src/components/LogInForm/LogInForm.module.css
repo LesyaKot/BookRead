@@ -22,6 +22,8 @@
   display: flex;
   flex-direction: column;
   padding: 32px 20px;
+  justify-content: flex-end;
+    align-items: stretch;
 }
 .label {
   font-family: Montserrat;
@@ -59,30 +61,6 @@
   height: 60px;
   border-radius: 0%;
 }
-.textTitle {
-  display: inline-block;
-  margin: 0;
-  color: #242a37;
-}
-
-.text {
-  position: relative;
-  text-align: center;
-  color: #898f9f;
-  font-family: Montserrat;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 17.07px;
-}
-
-.text::before {
-  content: "";
-  display: block;
-  width: 100px;
-  height: 2px;
-  margin: 0 auto 12px;
-  background-color: #898f9f;
-}
 
 .accent {
   color: #ff6b08;
@@ -98,4 +76,39 @@
   letter-spacing: 0%;
   text-align: center;
   color: #a6abb9;
+}
+
+.textWrap {
+  margin-top: 60px;
+  padding-top: 20px;
+}
+
+.textTitle {
+  display: inline-block;
+  margin: 0;
+  color: #242a37;
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 13px;
+  text-align: center;
+}
+
+.text {
+  position: relative;
+  text-align: center;
+  color: #898f9f;
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17.07px;
+  padding-bottom: 48px;
+}
+
+.text::before {
+  content: "";
+  display: block;
+  width: 100px;
+  height: 2px;
+  margin: 0 auto 12px;
+  background-color: #898f9f;
 }
