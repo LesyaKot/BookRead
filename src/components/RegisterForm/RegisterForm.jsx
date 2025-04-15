@@ -4,7 +4,6 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { toast } from "react-toastify";
 import { BsAsterisk } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import GoogleLoginBtn from "../GoogleLoginBtn/GoogleLoginBtn";
 import Logo from "../Logo/Logo";
 import "react-toastify/dist/ReactToastify.css";
 import css from "./RegisterForm.module.css";
@@ -45,8 +44,7 @@ export default function RegisterForm() {
           <Logo />
         </div>
         <div className={css.wrap}>
-          <GoogleLoginBtn />
-
+          
           <Formik
             initialValues={{
               name: "",
