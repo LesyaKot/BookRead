@@ -20,6 +20,18 @@ export default function Planning({ isOpen, onClose, onBookMoved }) {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
+
+  const handleBookClick = (id) => {
+    setSelectedBookIds((prev) =>
+      prev.includes(id) ? prev.filter((bookId) => bookId !== id) : [...prev, id]
+    );
+  };
+
   useEffect(() => {
     dispatch(getPlanning());
   }, [dispatch]);
@@ -66,11 +78,6 @@ export default function Planning({ isOpen, onClose, onBookMoved }) {
     }
   };
 
-  const handleSelectChange = (e) => {
-    const selected = Array.from(e.target.selectedOptions).map((o) => o.value);
-    setSelectedBookIds(selected);
-  };
-
   return (
     isOpen && (
       <div
@@ -106,20 +113,28 @@ export default function Planning({ isOpen, onClose, onBookMoved }) {
             />
           </div>
 
-          <div className={css.inputWrap}>
-            <select
-              multiple
-              value={selectedBookIds}
-              onChange={handleSelectChange}
-              className={css.input}
-            >
-              <option disabled>Choose books from the library</option>
-              {goingToReadBooks.map((book) => (
-                <option key={book._id} value={book._id}>
-                  {book.title}
-                </option>
-              ))}
-            </select>
+          <div className={css.inputTextWrap}>
+            <div className={css.inputText} onClick={toggleDropdown}>
+              {selectedBookIds.length === 0
+                ? "Choose books from the library"
+                : ` `}
+            </div>
+
+            {isDropdownOpen && (
+              <ul className={css.dropdownList}>
+                {goingToReadBooks.map((book) => (
+                  <li
+                    key={book._id}
+                    className={`${css.dropdownItem} ${
+                      selectedBookIds.includes(book._id) ? css.selected : ""
+                    }`}
+                    onClick={() => handleBookClick(book._id)}
+                  >
+                    {book.title}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <button className={css.addBtn} onClick={handleCurrentlyRead}>

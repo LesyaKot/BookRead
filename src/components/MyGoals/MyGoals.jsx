@@ -93,10 +93,9 @@ export default function MyGoals() {
 
   const chartData = {
     labels: hasPlanning
-      ? Array(plannedDays)
-          .fill("")
-          .map((_, index) => `Day ${index + 1}`)
-      : [],
+      ? Array(plannedDays).fill("").map((_, index) => `Day ${index + 1}`)
+      : Array(5).fill("").map((_, index) => `Day ${index + 1}`),
+  
     datasets: hasPlanning
       ? [
           {
@@ -118,9 +117,16 @@ export default function MyGoals() {
             tension: 0.4,
           },
         ]
-      : [],
+      : [
+          {
+            label: "Empty",
+            data: Array(5).fill(null), 
+            borderColor: "transparent",
+            pointRadius: 0,
+            fill: false,
+          },
+        ],
   };
-
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -135,8 +141,8 @@ export default function MyGoals() {
         display: false,
       },
       title: {
-        display: hasPlanning,
-        text: hasPlanning ? `Amount of pages / DA ${pagesPerDay}` : "",
+        display: true,
+        text: hasPlanning ? `Amount of pages / DA ${pagesPerDay}` : "Amount of pages / DA 0",
         align: "start",
         color: "#091E3F",
         font: {
@@ -147,79 +153,96 @@ export default function MyGoals() {
           bottom: 50,
         },
       },
-      annotation: {
-        annotations: hasPlanning
-          ? {
-              planLabel: {
-                type: "label",
-                xValue: plannedDays - 2,
-                yValue: planning?.pagesPerDay || 0,
-                content: "PLAN",
-                color: "#091E3F",
-                font: {
-                  size: 14,
-                  weight: "bold",
-                },
-                xAdjust: -15,
-                yAdjust: -20,
-              },
-              actLabel: {
-                type: "label",
-                xValue: Math.min(planning?.stats?.length - 2, plannedDays - 2),
-                yValue: planning?.stats?.slice(-1)[0]?.pagesCount || 0,
-                content: "ACT",
-                color: "#FF6B08",
-                font: {
-                  size: 14,
-                  weight: "bold",
-                },
-                xAdjust: -5,
-                yAdjust: -20,
-              },
-            }
-          : {},
+    },
+    annotation: {
+  annotations: {
+    planPoint: {
+      type: 'point',
+      xValue: 0,
+      yValue: hasPlanning ? planning.pagesPerDay || 0 : 0,
+      backgroundColor: '#091E3F',
+      radius: 6,
+      borderWidth: 0,
+    },
+    actPoint: {
+      type: 'point',
+      xValue: 0,
+      yValue: hasPlanning
+        ? planning?.stats?.slice(-1)[0]?.pagesCount || 0
+        : 0,
+      backgroundColor: '#FF6B08',
+      radius: 6,
+      borderWidth: 0,
+    },
+    planLabel: {
+      type: 'label',
+      xValue: 0,
+      yValue: hasPlanning ? planning.pagesPerDay || 0 : 0,
+      content: ['PLAN'],
+      backgroundColor: '#F5F7FA',
+      color: '#091E3F',
+      font: {
+        size: 12,
+        weight: 'bold',
+      },
+      xAdjust: 20,
+      yAdjust: -10,
+      padding: 6,
+      cornerRadius: 4,
+    },
+    actLabel: {
+      type: 'label',
+      xValue: 0,
+      yValue: hasPlanning
+        ? planning?.stats?.slice(-1)[0]?.pagesCount || 0
+        : 0,
+      content: ['ACT'],
+      backgroundColor: '#F5F7FA',
+      color: '#FF6B08',
+      font: {
+        size: 12,
+        weight: 'bold',
+      },
+      xAdjust: 20,
+      yAdjust: -10,
+      padding: 6,
+      cornerRadius: 4,
+    },
+  },
+},
+
+    
+    scales: {
+      x: {
+        ticks: {
+          display: false,
+        },
+        grid: {
+          display: false,
+        },
+        title: {
+          display: true,
+          text: "TIME",
+          font: {
+            size: 14,
+            weight: "bold",
+          },
+          color: "#091E3F",
+          align: "end",
+          padding: { top: 10 },
+        },
+      },
+      y: {
+        ticks: {
+          display: false,
+        },
+        grid: {
+          display: false,
+        },
       },
     },
-    scales: hasPlanning
-      ? {
-          x: {
-            ticks: {
-              display: false,
-            },
-            grid: {
-              display: false,
-            },
-            title: {
-              display: true,
-              text: "TIME",
-              font: {
-                size: 14,
-                weight: "bold",
-              },
-              color: "#091E3F",
-              align: "end",
-              padding: { top: 10 },
-            },
-          },
-          y: {
-            ticks: {
-              display: false,
-            },
-            grid: {
-              display: false,
-            },
-          },
-        }
-      : {
-          x: {
-            display: false,
-          },
-          y: {
-            display: false,
-          },
-        },
   };
-
+    
   return (
     <div className={css.wrap}>
       <h2 className={css.title}>My Goals</h2>

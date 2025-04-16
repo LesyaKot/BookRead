@@ -1,0 +1,75 @@
+.modal {
+  width: 280px;
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.closeBtn {
+  background-color: transparent;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  color: #242a37;
+}
+.inputWrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid darkgrey;
+  padding: 12px;
+  background-color: #fff;
+  width: 280px;
+}
+.input {
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 14px;
+  color: #a6abb9;
+}
+.icon {
+  margin-right: 12px;
+  color: #a6abb9;
+}
+.inputWithIcon {
+  border: none;
+}
+.inputTextWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid darkgrey;
+  padding: 12px;
+  background-color: #fff;
+  width: 280px;
+  color: #a6abb9;
+}
+.dropdownItem {
+  text-decoration: none;
+  padding: 10px;
+  cursor: pointer;
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 14px;
+  color: #242a37;
+  list-style: none;
+}
+.addBtn {
+  margin-top: 20px;
+  color: #242a37;
+  width: 171px;
+  height: 42px;
+  background-color: transparent;
+  border: 1px solid #242a37;
+  border-radius: 0%;
+  text-align: left;
+}
+.addBtn:hover {
+  color: #fff;
+  background-color: #ff6b08;
+  border: none;
+}
