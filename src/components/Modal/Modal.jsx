@@ -80,8 +80,7 @@ export default function Modal({ isOpen, onClose }) {
   return (
     <div className={css.backdrop} onClick={handleClose}>
       <div className={css.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={css.close} onClick={onClose}><FaLongArrowAltLeft />
-          {/* &times; */}
+        <button className={css.close} onClick={onClose}><FaLongArrowAltLeft width={30} />         
         </button>
 
         <form className={css.form} onSubmit={handleSubmit}>

@@ -30,12 +30,12 @@
   text-align: left;
   width: 280px;
   padding: 20px;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
 }
 
 .titleWrap {
   display: flex;
   align-items: center;
-  gap: 16px;
   width: 100%;
 }
 .textWrap {
@@ -55,19 +55,19 @@
   color: #242a37;
   display: grid;
   grid-template-columns: 100px auto;
-  gap: 35px;
 }
 .accent {
   color: #898f9f;
 }
-.review{
-  visibility: hidden;
+.review {
+  display: grid;
+  grid-template-columns: 100px auto;
 }
 .icon {
   color: #898f9f;
   margin-right: 12px;
-  width: 22px;
-  height: 17px;
+  width: 26px;
+  height: 20px;
 }
 .btn {
   background-color: #898f9f;
@@ -80,4 +80,11 @@
   width: 127px;
   height: 40px;
   margin-top: auto;
+}
+.feedback {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  display: grid;
+  grid-template-columns: 100px auto;
 }

@@ -36,7 +36,7 @@ export default function GoingToRead() {
         {goingToReadBooks.map((book) => (
           <li key={book._id} className={css.listItem}>
             <div className={css.titleWrap}>
-              <MdMenuBook className={css.icon} />
+              <MdMenuBook className={css.iconBook} />
               <p className={css.text}>{book.title}</p>
               <FaRegTrashCan
                 className={css.icon}

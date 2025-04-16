@@ -40,3 +40,13 @@
   border-radius: 0%;
   background-color: transparent;
 }
+.logoutBtn{
+  margin-right: 20px;
+  font-family: Montserrat;
+font-weight: 300;
+font-size: 14px;
+line-height: 100%;
+background-color: transparent;
+
+
+}

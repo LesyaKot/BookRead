@@ -3,6 +3,7 @@
   flex-direction: row;
   margin-top: 20px;
   gap: 16px;
+  justify-content: center;
 }
 .btn {
   width: 97px;
