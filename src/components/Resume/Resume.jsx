@@ -4,12 +4,16 @@ import { resume, fetchBooks } from "../../redux/book/operations";
 import { selectBooks } from "../../redux/book/selectors";
 import Rating from "../Rating/Rating";
 import css from "./Resume.module.css";
+import toast from "react-hot-toast";
 
 export default function Resume({ isOpen, onClose, bookId }) {
   const dispatch = useDispatch();
   const books = useSelector(selectBooks);
 
-  const book = useMemo(() => books.find((b) => b._id === bookId), [books, bookId]);
+  const book = useMemo(
+    () => books.find((b) => b._id === bookId),
+    [books, bookId]
+  );
 
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
@@ -33,12 +37,24 @@ export default function Resume({ isOpen, onClose, bookId }) {
 
   const handleSave = async () => {
     if (rating === 0) {
-      alert("Please select a rating before saving."); 
+      toast("Please select a rating before saving.");
       return;
     }
-    await dispatch(resume({ bookId, rating, feedback: review }));
+
+    if (review.trim() === "") {
+      toast("Please write a review before saving.");
+      return;
+    }
+
+    const payload = {
+      bookId,
+      rating,
+      feedback: review.trim(),
+    };
+
+    await dispatch(resume(payload));
     dispatch(fetchBooks());
-    onClose(); 
+    onClose();
   };
 
   return (

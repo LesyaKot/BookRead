@@ -17,12 +17,12 @@ export default function Library() {
   }, [dispatch]);
 
   const handleOpenModal = () => {
-    console.log("Opening modal");
+   
     dispatch(openModal());
   };
 
   const handleCloseModal = () => {
-    console.log("Closing modal");
+ 
     dispatch(closeModal());
   };
 

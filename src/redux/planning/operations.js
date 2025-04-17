@@ -35,7 +35,6 @@ export const planning = createAsyncThunk(
   }
 );
 
-axios.defaults.baseURL = "https://bookread-backend.goit.global";
 export const updatePlanning = createAsyncThunk(
   "planning/updatePlanning",
   async ({ pages }, thunkAPI) => {
@@ -76,8 +75,6 @@ export const getPlanning = createAsyncThunk(
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
-      console.log("Planning data:", response.data);
 
       if (response.data && response.data.planning) {
         return response.data.planning;

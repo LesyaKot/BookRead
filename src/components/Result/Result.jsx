@@ -105,7 +105,7 @@ export default function Result() {
           <tbody>
             {planning?.stats?.length > 0 ? (
               planning.stats.map((stat, index) => (
-                <tr key={index}>
+                <tr className={css.statistics} key={index}>
                   <td className={css.date}>
                     {new Date(stat.time).toLocaleDateString()}
                   </td>
