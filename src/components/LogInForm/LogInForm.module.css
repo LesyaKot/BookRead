@@ -152,14 +152,13 @@
     font-weight: 500;
     font-size: 14px;
     color: #898f9f;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
   }
   .labelText {
     font-family: Montserrat;
     font-weight: 500;
     font-size: 14px;
     color: #898f9f;
-    margin-bottom: 8px;
   }
   .btn {
     width: 320px;
@@ -167,10 +166,11 @@
   }
   .input {
     border-color: #1d1d1b26;
-
     background-color: #f5f7fa;
-    margin-bottom: 40px;
-    padding: 12px 13px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+    color: #a6abb9;
   }
   .logoWrap {
     display: flex;
