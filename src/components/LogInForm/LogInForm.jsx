@@ -86,7 +86,9 @@ export default function LogInForm() {
           </Form>
         </Formik>
 
-        <div className={css.textWrap}>
+       
+      </div>
+      <div className={css.textWrap}>
           <FaQuoteLeft className={css.icon} />
           <h3 className={css.textTitle}>
             Books are the ships of thoughts, wandering through the waves of
@@ -94,7 +96,6 @@ export default function LogInForm() {
           </h3>
           <p className={css.text}>Francis Bacon</p>
         </div>
-      </div>
     </div>
   );
 }

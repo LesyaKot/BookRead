@@ -3,10 +3,11 @@
   background-image: linear-gradient(#091e3fcc, #091e3fcc), url(/public/pic.png);
   background-repeat: no-repeat;
   background-size: cover;
-  width: 320px;
-  /* width: 100%; */
+  background-position: center center;
+  width: 100vw;
   height: 458px;
 }
+
 .logoWrap {
   background-color: #ffffff;
   padding: 16px 146px;
@@ -23,7 +24,7 @@
   flex-direction: column;
   padding: 32px 20px;
   justify-content: flex-end;
-    align-items: stretch;
+  align-items: stretch;
 }
 .label {
   font-family: Montserrat;
@@ -79,8 +80,9 @@
 }
 
 .textWrap {
-  margin-top: 60px;
   padding-top: 20px;
+  width: 229px;
+  height: 48px;
 }
 
 .textTitle {
@@ -111,4 +113,104 @@
   height: 2px;
   margin: 0 auto 12px;
   background-color: #898f9f;
+}
+
+/* TABLET */
+@media (min-width: 768px) {
+  .wrap {
+    background: #091e3fcc;
+    background-image: linear-gradient(#091e3fcc, #091e3fcc),
+      url(/public/pic.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    min-width: 768px;
+    height: 559px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+  .form {
+    width: 400px;
+    height: 430px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 40px;
+  }
+  .label {
+    width: 320px;
+    height: 67px;
+    text-align: start;
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 14px;
+    color: #898f9f;
+    margin-bottom: 20px;
+  }
+  .labelText {
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 14px;
+    color: #898f9f;
+    margin-bottom: 8px;
+  }
+  .btn {
+    width: 320px;
+    height: 60px;
+  }
+  .input {
+    border-color: #1d1d1b26;
+
+    background-color: #f5f7fa;
+    margin-bottom: 40px;
+    padding: 12px 13px;
+  }
+  .logoWrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    padding-left: 32px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  .textWrap {
+    background-color: #fff;
+    width: 397px;
+    height: 232px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 64px;
+    padding-bottom: 64px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .textTitle {
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 38px;
+    color: #242a37;
+    text-align: center;
+  }
+  .text {
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 100%;
+    text-align: center;
+    color: #898f9f;
+  }
+}
+
+/* DESKTOP */
+@media (min-width: 1440px) {
 }
