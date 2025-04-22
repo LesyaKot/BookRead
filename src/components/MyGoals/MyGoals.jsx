@@ -1,9 +1,8 @@
 import annotationPlugin from "chartjs-plugin-annotation";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import { MdMenuBook } from "react-icons/md";
-import TimerModal from "../TimerModal/TimerModal";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -33,16 +32,16 @@ ChartJS.register(
   Legend,
   annotationPlugin
 );
+import Timer from "../Timer/Timer";
 
 export default function MyGoals() {
   const dispatch = useDispatch();
-
   const planning = useSelector(selectPlanning);
   const planningEnded = useSelector(selectPlanningEnded);
   const isLoading = useSelector(selectIsLoading);
   const books = useSelector(selectBooks);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const goalDate = planning?.endDate ? new Date(planning.endDate) : null;
+  // const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (
@@ -59,12 +58,17 @@ export default function MyGoals() {
   const currentlyReadingBooks = books.filter(
     (book) => book.status === "currentlyReading"
   );
+  const finishedReadingBooks = books.filter(
+    (book) => book.status === "finishedReading"
+  );
 
   const amountOfBooks = currentlyReadingBooks.length;
   const amountOfPages = currentlyReadingBooks.reduce(
     (total, book) => total + book.pagesTotal,
     0
   );
+
+  const amountOfBooksLeft = finishedReadingBooks.length;
 
   const startDate = planning?.startDate ? new Date(planning.startDate) : null;
   const endDate = planning?.endDate ? new Date(planning.endDate) : null;
@@ -93,9 +97,13 @@ export default function MyGoals() {
 
   const chartData = {
     labels: hasPlanning
-      ? Array(plannedDays).fill("").map((_, index) => `Day ${index + 1}`)
-      : Array(5).fill("").map((_, index) => `Day ${index + 1}`),
-  
+      ? Array(plannedDays)
+          .fill("")
+          .map((_, index) => `Day ${index + 1}`)
+      : Array(5)
+          .fill("")
+          .map((_, index) => `Day ${index + 1}`),
+
     datasets: hasPlanning
       ? [
           {
@@ -120,7 +128,7 @@ export default function MyGoals() {
       : [
           {
             label: "Empty",
-            data: Array(5).fill(null), 
+            data: Array(5).fill(null),
             borderColor: "transparent",
             pointRadius: 0,
             fill: false,
@@ -142,7 +150,9 @@ export default function MyGoals() {
       },
       title: {
         display: true,
-        text: hasPlanning ? `Amount of pages / DA ${pagesPerDay}` : "Amount of pages / DA 0",
+        text: hasPlanning
+          ? `Amount of pages / DA ${pagesPerDay}`
+          : "Amount of pages / DA 0",
         align: "start",
         color: "#091E3F",
         font: {
@@ -155,63 +165,62 @@ export default function MyGoals() {
       },
     },
     annotation: {
-  annotations: {
-    planPoint: {
-      type: 'point',
-      xValue: 0,
-      yValue: hasPlanning ? planning.pagesPerDay || 0 : 0,
-      backgroundColor: '#091E3F',
-      radius: 6,
-      borderWidth: 0,
-    },
-    actPoint: {
-      type: 'point',
-      xValue: 0,
-      yValue: hasPlanning
-        ? planning?.stats?.slice(-1)[0]?.pagesCount || 0
-        : 0,
-      backgroundColor: '#FF6B08',
-      radius: 6,
-      borderWidth: 0,
-    },
-    planLabel: {
-      type: 'label',
-      xValue: 0,
-      yValue: hasPlanning ? planning.pagesPerDay || 0 : 0,
-      content: ['PLAN'],
-      backgroundColor: '#F5F7FA',
-      color: '#091E3F',
-      font: {
-        size: 12,
-        weight: 'bold',
+      annotations: {
+        planPoint: {
+          type: "point",
+          xValue: 0,
+          yValue: hasPlanning ? planning.pagesPerDay || 0 : 0,
+          backgroundColor: "#091E3F",
+          radius: 6,
+          borderWidth: 0,
+        },
+        actPoint: {
+          type: "point",
+          xValue: 0,
+          yValue: hasPlanning
+            ? planning?.stats?.slice(-1)[0]?.pagesCount || 0
+            : 0,
+          backgroundColor: "#FF6B08",
+          radius: 6,
+          borderWidth: 0,
+        },
+        planLabel: {
+          type: "label",
+          xValue: 0,
+          yValue: hasPlanning ? planning.pagesPerDay || 0 : 0,
+          content: ["PLAN"],
+          backgroundColor: "#F5F7FA",
+          color: "#091E3F",
+          font: {
+            size: 12,
+            weight: "bold",
+          },
+          xAdjust: 20,
+          yAdjust: -10,
+          padding: 6,
+          cornerRadius: 4,
+        },
+        actLabel: {
+          type: "label",
+          xValue: 0,
+          yValue: hasPlanning
+            ? planning?.stats?.slice(-1)[0]?.pagesCount || 0
+            : 0,
+          content: ["ACT"],
+          backgroundColor: "#F5F7FA",
+          color: "#FF6B08",
+          font: {
+            size: 12,
+            weight: "bold",
+          },
+          xAdjust: 20,
+          yAdjust: -10,
+          padding: 6,
+          cornerRadius: 4,
+        },
       },
-      xAdjust: 20,
-      yAdjust: -10,
-      padding: 6,
-      cornerRadius: 4,
     },
-    actLabel: {
-      type: 'label',
-      xValue: 0,
-      yValue: hasPlanning
-        ? planning?.stats?.slice(-1)[0]?.pagesCount || 0
-        : 0,
-      content: ['ACT'],
-      backgroundColor: '#F5F7FA',
-      color: '#FF6B08',
-      font: {
-        size: 12,
-        weight: 'bold',
-      },
-      xAdjust: 20,
-      yAdjust: -10,
-      padding: 6,
-      cornerRadius: 4,
-    },
-  },
-},
 
-    
     scales: {
       x: {
         ticks: {
@@ -242,24 +251,52 @@ export default function MyGoals() {
       },
     },
   };
-    
+
   return (
     <div className={css.wrap}>
-      <h2 className={css.title}>My Goals</h2>
-
       {amountOfBooks > 0 ? (
         <>
-          <div className={css.stats}>
-            <div className={css.amountWrap}>
-              <p className={css.amountTable}>{amountOfBooks}</p>
-              <p className={css.amountText}>Amount of books</p>
+          <div className={css.timerWrap}>
+            <div className={css.timerWrapItem}>
+              <h2 className={css.titleTimer}>Years Countdown</h2>
+              <Timer
+                targetDate={
+                  new Date(new Date().getFullYear(), 11, 31, 23, 59, 59)
+                }
+              />
             </div>
-            <div className={css.amountWrap}>
-              <p className={css.amountTable}>{amountOfDays}</p>
-              <p className={css.amountText}>Amount of days</p>
+
+            <div className={css.timerWrapItem}>
+              <h2 className={css.titleTimer}>Goals Countdown</h2>
+              {goalDate ? (
+                <Timer targetDate={goalDate} />
+              ) : (
+                <p>Goal has not been set yet</p>
+              )}
             </div>
           </div>
 
+          <div className={css.MyGoalsWrap}>
+            <h2 className={css.title}>My Goals</h2>
+
+            <div className={css.stats}>
+              <div className={css.amountWrap}>
+                <p className={css.amountTable}>{amountOfBooks}</p>
+                <p className={css.amountText}>Amount of books</p>
+              </div>
+              <div className={css.amountWrap}>
+                <p className={css.amountTable}>{amountOfDays}</p>
+                <p className={css.amountText}>Amount of days</p>
+              </div>
+
+              <div className={css.amountWrap}>
+                <p className={css.amountTable}>
+                  <span className={css.accentBook}>{amountOfBooksLeft}</span>
+                </p>
+                <p className={css.amountText}>Books left</p>
+              </div>
+            </div>
+          </div>
           <div className={css.currentlyReading}>
             <ul className={css.list}>
               {currentlyReadingBooks.map((book) => (
@@ -284,21 +321,6 @@ export default function MyGoals() {
                 </li>
               ))}
             </ul>
-          </div>
-
-          <div className={css.timerWrap}>
-            <button
-              className={css.trainBtn}
-              onClick={() => setIsModalOpen(true)}
-            >
-              Start training
-            </button>
-            {isModalOpen && (
-              <TimerModal
-                onClose={() => setIsModalOpen(false)}
-                goalDate={endDate}
-              />
-            )}
           </div>
 
           <div className={css.chart}>

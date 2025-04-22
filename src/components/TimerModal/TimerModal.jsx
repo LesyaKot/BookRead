@@ -2,10 +2,8 @@ import Timer from "../Timer/Timer";
 import css from "./TimerModal.module.css";
 
 export default function TimerModal({ onClose, goalDate }) {
-  console.log("!!!!Received goalDate in TimerModal:", goalDate);
   return (
     <div className="modal">
-      
       <h2 className={css.title}>Years Countdown</h2>
       <Timer
         targetDate={new Date(new Date().getFullYear(), 11, 31, 23, 59, 59)}
@@ -18,7 +16,9 @@ export default function TimerModal({ onClose, goalDate }) {
         <p>Goal has not been set yet</p>
       )}
 
-      <button className={css.btn} onClick={onClose}>Close</button>
+      <button className={css.btn} onClick={onClose}>
+        Close
+      </button>
     </div>
   );
 }

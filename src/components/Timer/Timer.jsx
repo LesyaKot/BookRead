@@ -5,7 +5,7 @@ export default function Timer({ targetDate }) {
  
   return (
     <Countdown
-      date={targetDate}
+           date={targetDate instanceof Date ? targetDate.getTime() : targetDate}
       renderer={({ days, hours, minutes, seconds }) => (
         <div className={css.timer}>
           <div className={css.timeBlock}>

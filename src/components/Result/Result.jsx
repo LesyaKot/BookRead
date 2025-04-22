@@ -70,36 +70,37 @@ export default function Result() {
   return (
     <div className={css.wrap}>
       <h2 className={css.title}>RESULT</h2>
-      <div className={css.inputCont}>
-        <div className={css.inputWrap}>
-          <label className={css.label}>Date</label>
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            placeholderText="26.03.2025"
-            dateFormat="dd/MM/yyyy"
-            className={css.input}
-            customInput={<input className={css.inputWithIcon} />}
-          />
-        </div>
+      <div className={css.inputContWrap}>
+        <div className={css.inputCont}>
+          <div className={css.inputWrap}>
+            <label className={css.label}>Date</label>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              placeholderText="26.03.2025"
+              dateFormat="dd/MM/yyyy"
+              className={css.input}
+              customInput={<input className={css.inputWithIcon} />}
+            />
+          </div>
 
-        <div className={css.inputWrap}>
-          <label className={css.label}>Amount of pages</label>
-          <input
-            className={css.input}
-            type="number"
-            value={numberOfPages}
-            onChange={(e) => setNumberOfPages(e.target.value)}
-            placeholder="32"
-          />
+          <div className={css.inputWrap}>
+            <label className={css.label}>Amount of pages</label>
+            <input
+              className={css.input}
+              type="number"
+              value={numberOfPages}
+              onChange={(e) => setNumberOfPages(e.target.value)}
+              placeholder="32"
+            />
+          </div>
         </div>
+        <button className={css.addBtn} onClick={handleAddPages}>
+          Add result
+        </button>
       </div>
-      <button className={css.addBtn} onClick={handleAddPages}>
-        Add result
-      </button>
-
       <div>
-        <h2 className={css.title}>STATISTICS</h2>
+        <h2 className={css.titleStat}>STATISTICS</h2>
         <table cellPadding="8" style={{ margin: "20px auto", width: "100%" }}>
           <thead></thead>
           <tbody>

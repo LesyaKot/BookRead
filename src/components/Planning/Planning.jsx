@@ -60,9 +60,14 @@ export default function Planning({ isOpen, onClose, onBookMoved }) {
       if (existingPlanning) {
         const existingBooks = existingPlanning?.books || [];
         const existingBookIds = existingBooks.map((book) => book._id);
+
+        const validGoingToReadIds = books
+          .filter((book) => book.status === "goingToRead")
+          .map((book) => book._id);
+
         const allBookIds = Array.from(
           new Set([...existingBookIds, ...selectedBookIds])
-        );
+        ).filter((id) => validGoingToReadIds.includes(id));
 
         planningData.books = allBookIds;
       }
