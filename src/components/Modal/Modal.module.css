@@ -14,13 +14,17 @@
   margin-left: auto;
   margin-right: auto;
 }
+
 .close {
-  background-color: transparent;
-  color: #ff6b08;
   position: absolute;
   top: -5%;
-  left: -5%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: transparent;
+  color: #ff6b08;
+  border: none;
 }
+
 .form {
   display: flex;
   flex-direction: column;
@@ -28,11 +32,11 @@
   justify-content: center;
   align-content: start;
   flex-wrap: nowrap;
-
   margin-top: 128px;
   padding-left: 24px;
   padding-right: 24px;
 }
+
 .label {
   display: flex;
   flex-direction: column;
@@ -63,6 +67,7 @@
   margin-right: 12px;
   color: #242a37;
 }
+
 .inputBook {
   display: flex;
   flex-direction: column;
@@ -80,6 +85,7 @@
   margin-right: 12px;
   color: #242a37;
 }
+
 .inputAuthour {
   display: flex;
   flex-direction: column;
@@ -97,6 +103,7 @@
   margin-right: 12px;
   color: #242a37;
 }
+
 .addBtn {
   color: #242a37;
   width: 171px;
@@ -109,11 +116,13 @@
   margin-right: auto;
   margin-top: 24px;
 }
+
 .addBtn:hover {
   background-color: #ff6b08;
   color: #fff;
   border: none;
 }
+
 .textWrap {
   text-align: left;
   width: 280px;
@@ -124,6 +133,7 @@
   padding-top: 20px;
   padding-bottom: 20px;
 }
+
 .textTitle {
   font-family: Montserrat;
   font-weight: 600;
@@ -131,12 +141,14 @@
   line-height: 21.94px;
   letter-spacing: 0%;
 }
+
 .textTitleMin {
   font-weight: 600;
   font-size: 16px;
   line-height: 19.5px;
   letter-spacing: 0%;
 }
+
 .text {
   font-family: Montserrat;
   font-weight: 400;
@@ -144,9 +156,11 @@
   line-height: 17.07px;
   letter-spacing: 0%;
 }
+
 .iconArrow {
   color: #ff6b08;
 }
+
 .okBtn {
   background-color: #ff6b08;
   color: #fff;
@@ -174,39 +188,57 @@
     background-color: #f6f7fb;
     padding: 32px;
   }
+
+  .modal {
+    position: relative;
+  }
+
   .form {
     width: 704px;
     margin-top: 90px;
   }
+
   .close {
-    top: 12%;
+    position: absolute;
+    top: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: transparent;
+    color: #ff6b08;
+    border: none;
   }
+
   .label {
     color: #898f9f;
   }
+
   .inputBook {
     width: 704px;
     height: 42px;
     margin-bottom: 24px;
     padding: 12px;
   }
+
   .inputAuthour {
     width: 336px;
     color: #a6abb9;
     background-color: #f6f7fb;
     padding: 12px;
   }
+
   .input {
     width: 152px;
     height: 42px;
     background-color: #f6f7fb;
     padding: 12px;
   }
+
   .groupWrap {
     display: flex;
     flex-direction: row;
     justify-content: center;
   }
+
   .textWrap {
     width: 608px;
     height: 272px;
