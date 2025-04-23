@@ -61,9 +61,42 @@
   margin-bottom: 8px;
   padding-right: 12px;
   margin-right: 12px;
-  color: #242A37;
+  color: #242a37;
 }
-
+.inputBook {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: nowrap;
+  width: 280px;
+  height: 42px;
+  background-color: #ffffff;
+  border-color: #1d1d1b26;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding-right: 12px;
+  margin-right: 12px;
+  color: #242a37;
+}
+.inputAuthour {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: nowrap;
+  width: 280px;
+  height: 42px;
+  background-color: #ffffff;
+  border-color: #1d1d1b26;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding-right: 12px;
+  margin-right: 12px;
+  color: #242a37;
+}
 .addBtn {
   color: #242a37;
   width: 171px;
@@ -133,4 +166,60 @@
   color: red;
   font-size: 14px;
   margin-top: 5px;
+}
+
+/* TABLET */
+@media (min-width: 768px) {
+  .backdrop {
+    background-color: #f6f7fb;
+    padding: 32px;
+  }
+  .form {
+    width: 704px;
+    margin-top: 90px;
+  }
+  .close {
+    top: 12%;
+  }
+  .label {
+    color: #898f9f;
+  }
+  .inputBook {
+    width: 704px;
+    height: 42px;
+    margin-bottom: 24px;
+    padding: 12px;
+  }
+  .inputAuthour {
+    width: 336px;
+    color: #a6abb9;
+    background-color: #f6f7fb;
+    padding: 12px;
+  }
+  .input {
+    width: 152px;
+    height: 42px;
+    background-color: #f6f7fb;
+    padding: 12px;
+  }
+  .groupWrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .textWrap {
+    width: 608px;
+    height: 272px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #fff;
+    padding: 40px;
+    margin-top: 20px;
+  }
+}
+
+/* DESKTOP */
+@media (min-width: 1440px) {
 }

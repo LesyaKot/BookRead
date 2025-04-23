@@ -87,7 +87,7 @@ export default function Modal({ isOpen, onClose }) {
           <label className={css.label}>
             Book title
             <input
-              className={css.input}
+              className={css.inputBook}
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -96,10 +96,12 @@ export default function Modal({ isOpen, onClose }) {
           </label>
           {errors.title && <p className={css.error}>{errors.title}</p>}
 
+<div className={css.groupWrap}>
+
           <label className={css.label}>
             Author
             <input
-              className={css.input}
+              className={css.inputAuthour}
               type="text"
               value={author}
               onChange={(e) => setAuthor(e.target.value)}
@@ -135,7 +137,7 @@ export default function Modal({ isOpen, onClose }) {
           {errors.pagesTotal && (
             <p className={css.error}>{errors.pagesTotal}</p>
           )}
-
+</div>
           <button className={css.addBtn} type="submit">
             Add
           </button>

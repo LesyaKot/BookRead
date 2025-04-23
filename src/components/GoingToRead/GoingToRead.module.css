@@ -64,7 +64,7 @@
 .accent {
   color: #898f9f;
 }
-.iconBook{
+.iconBook {
   color: #898f9f;
   margin-right: 12px;
   width: 26px;
@@ -85,5 +85,51 @@
   justify-content: center;
   align-items: center;
   margin-top: 28px;
-  color:#fff;
+  color: #fff;
+}
+
+/* TABLET */
+@media (min-width: 768px) {
+  .wrap {
+    margin-left: 32px;
+  }
+  .title {
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 100%;
+    margin-top: 120px;
+    margin-bottom: 24px;
+  }
+  .listItem {
+    width: 704px;
+    height: 62px;
+    padding: 14px 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .text {
+    font-weight: 500;
+    font-size: 14px;
+  }
+  .accent {
+    display: none;
+  }
+  .textWrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .trainBtn {
+    width: 200px;
+    height: 40px;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* DESKTOP */
+@media (min-width: 1440px) {
 }
