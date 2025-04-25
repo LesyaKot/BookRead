@@ -31,6 +31,22 @@ export default function Result() {
       return;
     }
 
+    const pagesToAdd = Number(numberOfPages);
+
+    const pagesLeft = planning.books
+      ?.filter((book) => book.pagesFinished < book.pagesTotal)
+      .reduce((sum, book) => {
+        const remaining = book.pagesTotal - book.pagesFinished;
+        return sum + remaining;
+      }, 0);
+
+    if (pagesToAdd > pagesLeft) {
+      toast.error(
+        `Too many pages! Only ${pagesLeft} pages left to read in this plan.`
+      );
+      return;
+    }
+
     try {
       const prevFinishedBookIds =
         planning?.books?.length > 0
@@ -39,7 +55,7 @@ export default function Result() {
               .map((book) => book._id)
           : [];
 
-      await dispatch(updatePlanning({ pages: Number(numberOfPages) })).unwrap();
+      await dispatch(updatePlanning({ pages: pagesToAdd })).unwrap();
 
       const updatedPlanning = await dispatch(getPlanning()).unwrap();
 

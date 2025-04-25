@@ -26,9 +26,10 @@ export default function Modal({ isOpen, onClose }) {
 
     if (!title.trim()) {
       newErrors.title = "Title is required.";
-    } else if (!/[a-zA-Zа-яА-Я]/.test(title)) {
-      newErrors.title = "Title must contain at least one letter.";
+    } else if (!/[a-zA-Zа-яА-Я0-9]/.test(title)) {
+      newErrors.title = "Title must contain at least one letter or number.";
     }
+    
 
     if (!author.trim()) {
       newErrors.author = "Author is required.";

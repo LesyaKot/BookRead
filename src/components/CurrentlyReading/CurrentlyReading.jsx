@@ -11,8 +11,16 @@ export default function CurrentlyReading() {
   );
 
   return (
-    <div>
+    <div className={css.wrap}>
       <h2 className={css.title}>Reading now</h2>
+
+      <div className={css.namesWrap}>
+        <p className={css.nameItem}>Book</p>
+        <p className={css.nameItem}>Author</p>
+        <p className={css.nameItem}>Year</p>
+        <p className={css.nameItem}>Pages</p>
+      </div>
+
       <ul className={css.list}>
         {currentlyReadingBooks.map((book) => (
           <li key={book._id} className={css.listItem}>

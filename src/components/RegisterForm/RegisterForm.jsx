@@ -25,7 +25,7 @@ export default function RegisterForm() {
         localStorage.setItem("token", result.token);
       }
 
-      toast.success(`User ${result.userData.name} successfully registered!`);
+      toast.success(`${result.userData.name} you are successfully registered!`);
       setTimeout(() => {
         navigate("/books");
       }, 2000);

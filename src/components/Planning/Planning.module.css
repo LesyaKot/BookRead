@@ -16,6 +16,7 @@
   padding: 0;
   color: #242a37;
 }
+
 .inputWrap {
   display: flex;
   flex-direction: row;
@@ -25,19 +26,23 @@
   background-color: #fff;
   width: 280px;
 }
+
 .input {
   font-family: Montserrat;
   font-weight: 500;
   font-size: 14px;
   color: #a6abb9;
 }
+
 .icon {
   margin-right: 12px;
   color: #a6abb9;
 }
+
 .inputWithIcon {
   border: none;
 }
+
 .inputTextWrap {
   display: flex;
   flex-direction: column;
@@ -48,6 +53,7 @@
   width: 280px;
   color: #a6abb9;
 }
+
 .dropdownItem {
   text-decoration: none;
   padding: 10px;
@@ -58,6 +64,7 @@
   color: #242a37;
   list-style: none;
 }
+
 .addBtn {
   margin-top: 20px;
   color: #242a37;
@@ -68,8 +75,25 @@
   border-radius: 0%;
   text-align: left;
 }
+
 .addBtn:hover {
   color: #fff;
   background-color: #ff6b08;
   border: none;
+}
+
+/* TABLET */
+@media (min-width: 768px) {
+  .modal {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .closeBtn {
+    text-align: left;
+  }
+}
+
+/* DESKTOP */
+@media (min-width: 1440px) {
 }
